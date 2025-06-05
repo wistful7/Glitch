@@ -176,8 +176,10 @@ body {
     }
 
     #ingame-placeholder-image {
-        width: 80px; /* Smaller placeholder on small screens */
-        bottom: 15px; /* Adjust position for smaller padding/layout */
+        width: 28vw; /* Adjust this percentage as needed. e.g., 25vw, 30vw */
+                     /* On a 375px wide screen, 28vw is approx 105px */
+                     /* On a 320px wide screen, 28vw is approx 90px */
+        bottom: 15px;
         right: 15px;
     }
 
