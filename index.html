@@ -7,19 +7,31 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="game-container">
+    <!-- NEW: Splash Screen -->
+    <div id="splash-screen">
+        <h1>The Torquay Conundrum</h1>
+        <p>(or your chosen game title)</p>
+        <button id="play-button">Play Game</button>
+        <p class="voice-note">(Ensure your sound is on for voice narration)</p>
+    </div>
+
+    <!-- Game container will be hidden initially -->
+    <div id="game-container" style="display: none;">
         <div id="status-bar">
             <p><strong>Time:</strong> <span id="time-display">Hour 0</span></p>
             <p><strong>Peter's Certainty (Simulation):</strong> <span id="certainty-display">Low</span></p>
         </div>
         <hr>
         <div id="story-text">
-            </div>
+            <!-- Story content will appear here -->
+        </div>
         <div id="choices-container">
-            </div>
+            <!-- Choices will appear here -->
+        </div>
         <div id="friend-status-container" style="margin-top: 20px; padding-top: 10px; border-top: 1px solid #ccc;">
             <h4>Friend Status:</h4>
-            </div>
+            <!-- Friend statuses will be dynamically added here by JavaScript -->
+        </div>
     </div>
 
     <script type="module" src="js/main.js"></script>
