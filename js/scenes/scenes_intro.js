@@ -4,18 +4,29 @@ import { gameState, advanceTime } from '../game_state.js';
 
 export const introScenes = {
     "start": {
-        text: "The familiar thrum of live music fills the Torquay Hotel. You're here with your mates: Mel, John, Andy, Janita, Simone, and Tony. The band, 'The Kite Machine,' is halfway through a surprisingly good cover of a Cold Chisel classic. You take a sip of your beer, feeling a comfortable buzz.", // UPDATED friend names
+        text: () => {
+            // Updated text (Option 2)
+            return "Torquay Hotel is jumping. Your mates have assembled: Mel, eyebrow already set to 'skeptical'; John, having miraculously navigated his hearse to a screeching halt; Andy, in his possibly sentient Fender t-shirt; Janita, phone out, filming the unfolding drama for posterity; Simone; and Tony, ready to flee. 'The Kite Machine' concludes a valiant assault on a Cold Chisel classic. Levi, their frontman – a blur of hair and misplaced confidence – grabs the mike. 'Right, Torquay!' he yelps, 'Dance hard or it's \"Sweet Caroline\" for nine hours straight!' He grins maniacally. A few brave patrons twitch. You sip your beer. It's... beer-adjacent.";
+        },
         onLoad: () => {
             advanceTime(1);
             gameState.currentLocation = "Torquay Hotel";
         },
         choices: [
-            { text: "Enjoy the music and the moment.", nextScene: "glitch_observe" },
-            { text: "Scan the room, feeling a slight, unplaceable unease.", nextScene: "glitch_observe_uneasy" }
+            { text: "Enjoy the music and the moment, or at least pretend to.", nextScene: "glitch_observe" },
+            { text: "Scan the room, feeling a slight, unplaceable unease, possibly related to the 'Sweet Caroline' threat.", nextScene: "glitch_observe_uneasy" }
         ]
     },
+
+    // ... rest of your introScenes (glitch_observe, glitch_observe_uneasy, etc.) ...
+    // Ensure those scenes follow here as they were defined previously. For example:
+
     "glitch_observe": {
-        text: "You focus on the band, nodding along. Suddenly, the lead singer seems to skip, like a scratched CD, repeating the same line twice: '...cheap wine and a three-day growth, growth!' He blinks, shakes his head slightly, and carries on as if nothing happened. None of your friends seem to have noticed.",
+        text: () => {
+            let scene_text = "You attempt to focus on the band, nodding with what you hope passes for rhythmic appreciation. Suddenly, the lead singer, Levi, mid-power-ballad-squall, seems to... skip. Not in a jaunty, hop-like fashion, but more like a corrupted audio file or a particularly stubborn AI refusing to compute the concept of 'subtlety'. He repeats the same line twice: '...cheap wine and a three-day growth, growth!' He blinks, a look of profound bafflement momentarily replacing the rock-god intensity, shakes his head as if dislodging a bewildered moth, and carries on. ";
+            scene_text += "Remarkably, none of your friends, currently engrossed in their own existential crises or the bottom of their glasses, seem to have noticed this blatant affront to the laws of linear time.";
+            return scene_text;
+        },
         choices: [
             { text: "Shrug it off. Too much beer, maybe?", consequence: () => { gameState.peterSimulationCertainty = Math.max(0, gameState.peterSimulationCertainty - 1); }, nextScene: "post_glitch_initial_chat_mel" },
             { text: "Make a mental note. That was weird.", consequence: () => { gameState.peterSimulationCertainty = Math.min(10, gameState.peterSimulationCertainty + 1); }, nextScene: "post_glitch_initial_chat_mel" },
@@ -43,11 +54,11 @@ export const introScenes = {
         text: () => {
             let melResponse = "";
             if (gameState.friends.mel.friendship > 5) {
-                melResponse = "Mel leans in, shouting over the music. 'Saw what, Pete? The singer nearly choking on his own spit? Nah, missed that bit.' She gives you a curious look. 'You alright?'";
+                melResponse = "Mel leans in, shouting over the renewed musical onslaught. 'Saw what, Pete? The existential dread in the guitarist's eyes? Or did Levi just spontaneously combust and I missed it? Terribly inconvenient if he has, the set's not over.' She gives you a curious, slightly amused look. 'You alright, or has the cheap wine finally achieved sentience?'";
             } else {
-                melResponse = "Mel looks at you, a little impatient with the interruption. 'What are you on about, Peter? I'm trying to listen to the song.'";
+                melResponse = "Mel turns, her expression one of carefully curated patience usually reserved for explaining offside rules to particularly dense spaniels. 'What are you on about, Peter? I'm trying to ascertain if the drummer is using actual rhythm or just hitting things in a sequence that vaguely resembles it. It's quite the conundrum.'";
             }
-            return `You turn to Mel. "Did you see that? The singer just glitched out."\n\n${melResponse}`;
+            return `You turn to Mel. "Did you see that? The singer just... hiccuped. In time. Twice."\n\n${melResponse}`;
         },
         onLoad: () => { advanceTime(0.1); },
         choices: [

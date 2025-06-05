@@ -47,7 +47,7 @@ export const shiftingLensScenes = {
         },
         choices: [
             {
-                text: "\"It's the *feeling*, Mel. The way things just... repeat or go slightly wrong.\"",
+                text: "\"It's the feeling, Mel. The way things just... repeat or go slightly wrong.\"",
                 nextScene: "pub_discussion_deepens",
                 consequence: () => { gameState.friends.mel.suspicion = Math.min(10, gameState.friends.mel.suspicion + 1); }
             },
@@ -64,7 +64,11 @@ export const shiftingLensScenes = {
         ]
     },
     "pub_observational_approach": {
-        text: "You scan the room intently. The chatter, the clinking glasses, the low hum of the coolers. Mel watches you, a mixture of amusement and... something else? Patience? \n'And what exactly are you hoping to find?' she asks. 'The source code in your beer nuts? Fine, Peter. Observe. I'll 'observe' you observing. Just try not to make a scene.'",
+        text: () => {
+            let scene_text = "You decide to deploy your keen observational skills, scanning the room intently. The chatter, the clinking glasses, the low hum of the coolers – all standard pub ambience. Or is it? You narrow your eyes. That couple in the corner... they've had the exact same 'surprised-then-laughing' reaction three times in the last five minutes. Textbook limited dialogue loop. I've seen more sophisticated emotional range in a beta-test chatbot designed to sell insurance.\n\n";
+            scene_text += "Mel watches you, a faint smile playing on her lips. 'And what exactly are we hoping to find, Mulder?' she asks, her voice laced with that familiar ironic dryness. 'The source code hidden in the beer nuts? Or perhaps a tear in the very fabric of the pub carpet that leads to another dimension? Do try not to make a scene if you find it; I've just ordered another drink.'";
+            return scene_text;
+        },
         choices: [
             {
                 text: "Focus on a nearby table where a conversation seems a bit too repetitive.",
@@ -181,13 +185,18 @@ export const shiftingLensScenes = {
             { text: "\"Yeah, maybe I should head home soon.\"", nextScene: "leaving_pub_options" }
         ]
     },
-    "esplanade_confidential_intro": {
-        text: "Mel agrees, and you both step out of the Torquay Hotel into the cool night air. The Esplanade is quieter, with the rhythmic sound of waves crashing nearby. The change of scenery feels significant.",
+   "esplanade_confidential_intro": {
+        text: () => {
+            let sceneDescription = "Mel agrees, a flicker of something unreadable in her eyes. 'Fresh air, yes. And perhaps fewer potential witnesses to your... unraveling.' You both step out of the Torquay Hotel into the cool, surprisingly un-glitchy night air. The Esplanade is quieter, the waves performing their usual rhythmic crashing – impressively consistent, really.\n\n";
+            sceneDescription += "As you walk, Peter, attempting to lead the way to a 'suitably discreet bench,' you confidently stride past three perfectly good empty ones. Mel, without missing a beat, gently steers you back. 'This one looks adequately brooding, don't you think? Or were you aiming for that particularly forlorn-looking ghost gum another kilometer down the path as our designated spot for existential dread?'\n\n";
+            sceneDescription += "Just as you're about to sit, Mel stops, pointing with her chin. 'Well, that's not very festive.' Scattered on the pavement near a struggling saltbush are several dozen dead bees, looking like tiny, fuzzy apostrophes of doom. 'Now, did I manifest those, or are they just a particularly grim form of local confetti?' she muses, poking one gently with the toe of her shoe. She gives that quick, dismissive headshake. 'Never mind. The change of scenery, dead bees notwithstanding, feels significant.'";
+            return sceneDescription;
+        },
         onLoad: () => {
             advanceTime(0.2);
             gameState.currentLocation = "Esplanade";
         },
-        choices: [
+    choices: [
             { text: "Start by explaining your simulation theory more calmly.", nextScene: "esplanade_explain_theory" },
             { text: "Ask Mel directly if she's ever felt like things aren't quite real.", nextScene: "esplanade_ask_mel_direct" }
         ]
@@ -434,25 +443,63 @@ export const shiftingLensScenes = {
     // and also "leaving_pub_options" in scenes_endings.js
     "suggest_peters_place": {
         text: () => {
-            let context = (gameState.currentLocation === "Leaving Cafe") ? "after the strange cafe experience" : "after leaving the pub";
-            return `You suggest heading back to your place. 'It's quieter there ${context}, we can talk properly and maybe figure some things out without... distractions.' Mel considers it.`;
+            let context = (gameState.currentLocation === "Leaving Cafe") ? "after that... enlightening experience at the cafe from which my tastebuds may never recover" : "after the stimulating intellectual workout that is the Torquay Hotel pub quiz night";
+            let peterDirections = "";
+            // This is a hypothetical spot where Peter might give directions. We'll add a more concrete example if a choice leads to him actually giving them.
+            // For now, let's focus on Mel's reaction if he *were* to give them.
+            // Mel might say, "Your place, Peter? Splendid. And how do we get there? Second star to the right and straight on 'til morning, or do you have a more... terrestrial set of instructions involving, perhaps, a rogue garden gnome and a wheelie bin with strong opinions?"
+
+            // For now, just a general offer from Peter:
+            return `You suggest heading back to your place. 'It's quieter there ${context},' you offer, 'we can talk properly, and I can show you my collection of rare synthesiser instruction manuals. Utterly riveting. Plus, no risk of encountering rogue bee incidents, one hopes.' Mel considers this with the gravity one might afford a proposal to colonise Mars.`;
         },
         onLoad: () => { advanceTime(0.1); },
         choices: [
             {
-                text: "Mel: \"Alright, Peter. Your place it is. Lead the way.\"",
+                text: () => {
+                    if (gameState.friends.mel.friendship > 3 || gameState.friends.mel.trustInPeterTheory > 2) {
+                        return "Mel: \"Your collection of synth manuals, you say? How could I possibly resist such an offer? Lead on, Macduff... and try not to walk past your own house this time. I'll keep an eye out for the 'startled kangaroo' cloud formation you use as a landmark.\"";
+                    }
+                    return "Mel: \"Your place it is. But you're navigating, Peter, and if we end up in Queensland, I'm blaming the algorithm.\""; // Default acceptance if conditions met
+                },
                 condition: () => gameState.friends.mel.friendship > 3 || gameState.friends.mel.trustInPeterTheory > 2,
-                nextScene: "at_peters_place_arrival"
+                nextScene: "at_peters_place_walk_or_direct" // New intermediate scene to decide if we narrate the walk
             },
+            // ... other existing choices for Mel declining, or Peter going alone ...
             {
-                text: "Mel: \"You know, Peter, I think I'd rather just head home. It's been a really long night.\"",
+                text: "Mel: \"You know, Peter, as tempting as 'rare synthesiser instruction manuals' sounds, I think I'll brave the wilds of my own apartment. It's been a night.\"",
                 condition: () => !(gameState.friends.mel.friendship > 3 || gameState.friends.mel.trustInPeterTheory > 2),
                 nextScene: "mel_declines_peters_place"
             },
             {
-                text: "\"Actually, I think I just need to crash. You go ahead to yours if you want.\"",
+                text: "\"Actually, my brain feels like it's been through a spin cycle. I just need to crash. You go ahead to yours if you want.\"",
                 nextScene: "go_home_alone_intro_todo"
             }
+        ]
+    },
+
+    // NEW Intermediate scene (conceptual, you'd define it fully)
+    "at_peters_place_walk_or_direct": {
+        text: "Mel has agreed to come to your place.",
+        choices: [
+            {text: "Narrate the walk there (potential for spatial awareness quirks).", nextScene: "walk_to_peters_place_narrated"},
+            {text: "Arrive directly at Peter's place.", nextScene: "at_peters_place_arrival"}
+        ]
+    },
+
+    // NEW Scene: if narrating the walk
+    "walk_to_peters_place_narrated": {
+        text: () => {
+            let scene_text = "You set off towards your house, Mel accompanying you with an air of amused resignation. 'Alright, Peter,' she says, 'standard procedure: you point vaguely in the direction you *think* home is, and I'll handle the actual micro-navigation past any ghost gums that look particularly judgemental or rogue wheelie bins that might have shifted since breakfast.'\n\n";
+            scene_text += "True to form, you almost lead her past your street entirely, distracted by a particularly interesting pattern of lichen on a telegraph pole. 'Ahem,' Mel coughs pointedly, 'Unless your house has recently camouflaged itself as a very convincing patch of agapanthus, I believe this is us.' You sheepishly backtrack to your gate, where a lone Ugg boot lies forlornly on the porch as if it tried to make a bid for freedom.";
+            return scene_text;
+        },
+        onLoad: () => {
+            // gameState.currentLocation already "Peter's Place" from at_peters_place_arrival logic, or set it here
+            gameState.currentLocation = "Walking to Peter's Place"; // or "Approaching Peter's Place"
+            advanceTime(0.2); // Time for the walk
+        },
+        choices: [
+            {text: "Usher Mel inside.", nextScene: "at_peters_place_arrival"}
         ]
     },
     "mel_declines_peters_place": {
@@ -480,8 +527,10 @@ export const shiftingLensScenes = {
     },
     "at_peters_place_arrival": {
         text: () => {
-            let placeDescription = Math.random() > 0.5 ? "Your apartment is quiet, a stark contrast to the pub. The usual clutter is reassuringly familiar." : "Your place is a chaotic landscape of notes, half-finished projects, and empty coffee mugs. A testament to your racing mind.";
-            return `${placeDescription} Mel steps inside, looking around with interest. 'So, this is the nerve center,' she remarks, a hint of teasing in her voice.`;
+            let placeDescription = Math.random() > 0.5 ?
+                "Your apartment, or 'command centre for the bewildered' as Mel might call it, is quiet. The usual endearing chaos of synthesizer cables resembling metallic spaghetti, stacks of obscure philosophy books, and at least one pair of Ugg boots attempting to assimilate with a pile of psychedelic-print hippie pants, is reassuringly familiar." :
+                "Your place is a veritable museum of analogue synthesizers, their knobs and patch bays gleaming دعوت‌آمیزانه (invitingly) under the low light. A distinct scent of solder, old circuits, and possibly despair, hangs in the air. Your favourite tie-dye hippie pants are draped artfully over a vintage Moog.";
+            return `${placeDescription} Mel steps inside, taking it all in with an appreciative sniff. 'So, this is the inner sanctum,' she remarks, her eyes twinkling. 'Where genius wrestles with questionable fashion choices and the mysteries of the universe are probed with… well, with whatever those blinking things do. Do any of them make a decent cup of tea?'`;
         },
         onLoad: () => {
             gameState.currentLocation = "Peter's Place";
@@ -712,9 +761,10 @@ export const shiftingLensScenes = {
     },
     "rejoin_friends_casual_chat": {
         text: () => {
-            let johnLine = gameState.friends.john.present ? "John grins. 'Not much, mate. Just wondering if you two were solving the world's problems out there or just needed some privacy.'" : ""; // Name updated
-            let janitaLine = gameState.friends.carrot.present ? "Janita adds, 'I saved you some carrot cake, Peter, if you want some later!'" : ""; // Name updated
-            return `You try to act casual. ${johnLine} ${janitaLine} The conversation picks up, a bit strained perhaps, but an attempt at normalcy. Mel subtly supports your casual demeanor.`;
+            let johnLine = gameState.friends.john.present ? "John, looking surprisingly chipper for someone who probably just de-materialised from a long-haul flight via his hearse's trans-dimensional boot, grins. 'Not much, mate. Just wondering if you two were out there composing a symphony of sighs or merely needed some privacy from my riveting account of airport security protocols.'" : "";
+            let janitaLine = gameState.friends.carrot.present ? "Janita beams, her phone already subtly documenting Mel's slightly exasperated eye-roll for her 'Friends Behaving Oddly' collection. 'I saved you some carrot cake, Peter! It's my nan's recipe – mostly carrot, partly existential comfort!'" : "";
+            let andyLine = gameState.friends.neil.present ? "Andy, in his Fender tee, nods sagely. 'The band's tightening up. Still not a patch on early Genesis, mind, but less offensive than that time they tried a dubstep version of Khe Sanh.'" : "";
+            return `You try to act casual, a feat requiring Herculean self-control. ${johnLine} ${janitaLine} ${andyLine} The conversation picks up, a bit like a car with a dodgy starter motor, but it picks up. Mel subtly supports your casual demeanor, mostly by not immediately asking if anyone else saw the fabric of reality develop a sudden fondness for bees.`;
         },
         onLoad: () => { advanceTime(0.3); },
         choices: [

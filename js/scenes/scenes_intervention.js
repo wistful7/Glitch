@@ -7,13 +7,13 @@ export const interventionScenes = {
         text: () => {
             let melConcern = "";
             if (gameState.friends.mel.trustInPeterTheory > 3 || gameState.friends.mel.friendship > 6) {
-                melConcern = "Mel gives you a supportive but worried glance. 'Be careful, Peter. They seem... on edge.'";
+                melConcern = "Mel gives you a supportive but worried glance, the kind one gives just before a particularly tricky tax audit. 'Be careful, Peter. They seem... unusually coordinated. And possibly armed with PowerPoint slides.'";
             } else {
-                melConcern = "Mel watches you approach the others, her expression carefully neutral.";
+                melConcern = "Mel watches you approach the others, her expression as neutral as a Swiss diplomat discussing the correct way to fold a napkin.";
             }
-            // Janita's carrot cake offer - Name already updated to Janita in gameState, so just use that.
-            let janitaOffer = gameState.friends.carrot.present ? "Janita nervously fiddles with a container. 'Oh, Peter, Mel... before things get too serious, I brought some of my carrot cake. If anyone wants to try a piece later? It's a new recipe.'" : "";
-            return `You decide it's time to talk to the others, or perhaps they've decided it's time to talk to you. ${janitaOffer} The air feels thick with unspoken words. ${melConcern} You find John and Simone exchanging a serious look. They motion for you and Mel to join them, and soon Andy, Janita, and Tony are gathered.`; // Names updated
+            let janitaOffer = gameState.friends.carrot.present ? "Janita, radiating nervous warmth and possibly the faint scent of vanilla from her earlier baking, fiddles with a container. 'Oh, Peter, Mel... before things get... well, *thingy*, I brought some of my anxiety-reducing carrot cake. Just in case our collective consciousness requires sugary sustenance.'" : "";
+            let johnPresence = gameState.friends.john.present ? "John, looking like he’s just commuted from another dimension in his surprisingly well-maintained hearse," : "You find"; // Adjust based on whether John is always at John's lounge.
+            return `You decide it's time to talk to the others, or perhaps they've decided it's time to talk to you, which is usually less optimal. ${janitaOffer} The air feels thick with unspoken words and the faint possibility of an actual intervention. ${melConcern} ${johnPresence} Simone exchanging a serious look. Andy, his Fender t-shirt practically a second skin by now, looks unusually pensive. They motion for you and Mel to join them, and soon Tony is also gathered, looking like he'd rather be anywhere else, possibly even listening to a vuvuzela solo.`;
         },
         onLoad: () => {
             advanceTime(0.5);
@@ -35,10 +35,10 @@ export const interventionScenes = {
     },
     "intervention_accusation_begins": {
         text: () => {
-            let JanitaText = gameState.friends.carrot.present ? "Janita speaks up, her voice trembling slightly. 'Peter, I'm scared. Every time something really odd happens, you're right there. It feels... it feels connected to you.'" : "";
-            let AndyText = gameState.friends.neil.present ? "Andy adds, more softly, 'Maybe I've just had one too many wines tonight, Peter, but it really does feel like the strangeness follows you. It's like the background radiation of weirdness just spikes whenever you get worked up about something.'" : "";
-            let JohnText = gameState.friends.john.present ? "John jumps in, 'It's not just the big stuff, Pete. It's little things. You ever talk to Tatiana at the surf club? Feels like her dialogue tree's got three branches, max. Classic NPC, that one. The point is, the whole vibe gets screwy around you.'" : "";
-            return `${JanitaText}${JanitaText ? '\n\n' : ''}${AndyText}${AndyText ? '\n\n' : ''}${JohnText}${JohnText ? '\n\n' : ''}Simone continues, 'We've discussed it. A lot. And we've come to a difficult conclusion, Peter. We think you're the reason this is all happening. You're somehow... the cause, or an anchor for this simulation's instability.'`; // Names updated
+            let JanitaText = gameState.friends.carrot.present ? "Janita speaks up, her voice trembling like a chihuahua in a wind tunnel. 'Peter, I'm scared. Every time something really odd happens – like that business with the spontaneously appearing bees, or the singer's unfortunate temporal hiccup – you're right there. It feels... it feels like you're emitting some sort of weirdness field!'" : "";
+            let AndyText = gameState.friends.neil.present ? "Andy, for once looking up from an imaginary fretboard, chimes in, 'Maybe it's the wine, Pete, or maybe it's the sheer, unadulterated seventy-decibel weirdness, but it really does feel like the strangeness follows you. Like you're some sort of mobile anomaly generator, possibly battery-operated.'" : "";
+            let JohnText = gameState.friends.john.present ? "John, with the weary sigh of a man who has seen too many baggage carousels, jumps in. 'It's not just the big stuff, Pete. It's the... the *theories*. You keep telling me Tatiana at the surf club isn't real. Says the man who thinks reality is a badly programmed synthesiser! Are you secretly a helicopter pilot, Peter, with all this 'woop woop' noise about glitches? Because frankly, the only thing glitching around here is my patience!'" : ""; // John makes "helicopter pilot" a sarcastic jab at Peter
+            return `${JanitaText}${JanitaText ? '\n\n' : ''}${AndyText}${AndyText ? '\n\n' : ''}${JohnText}${JohnText ? '\n\n' : ''}Simone continues, her voice calm but firm as a tax demand, 'We've discussed it. A lot. Possibly too much. And we've come to a difficult, and frankly rather awkward, conclusion, Peter. We think you're the reason this is all happening. You're somehow... the loose cannon in the symphony, the grit in the cosmic gearbox, the... well, you get the idea. The anchor for this simulation's instability.'`;
         },
         onLoad: () => { advanceTime(0.5); },
         choices: [
@@ -48,7 +48,7 @@ export const interventionScenes = {
         ]
     },
     "intervention_peters_denial": {
-        text: "Your denial hangs in the air. John shakes his head. 'We're not saying you're doing it on purpose, mate. But the pattern is undeniable.' Tony chimes in, 'Look, Peter, we're not here to point fingers just to be mean. We're trying to find a solution.'", // Names updated
+        text: "Your denial hangs in the air. John shakes his head and counts on his fingers. 'We're not saying you're doing it on purpose, mate. But the pattern is undeniable.' Tony chimes in, 'Look, Peter, we're not here to point fingers just to be mean. We're trying to find a solution.'", // Names updated
         onLoad: () => {
             if (gameState.friends.john.present) gameState.friends.john.friendship = Math.max(0, gameState.friends.john.friendship -1);
             if (gameState.friends.kel.present) gameState.friends.kel.friendship = Math.max(0, gameState.friends.kel.friendship -1); // kel is key for Tony
@@ -109,7 +109,7 @@ export const interventionScenes = {
         ]
     },
     "intervention_friends_reveal_plan": {
-        text: "Tony finally speaks, his voice practical. 'Look, Peter. We've already made up our minds. We're not doing this to hurt you. We're doing this because we feel we have no other choice. For the simulation to collapse, or at least for us to get out of this... this localized distortion field around you, we think we all need to go away. Leave you. Completely alone.'\n\nJohn adds, 'If you're the anchor, Peter, then with no ships tied to you... maybe the harbor itself disappears.'", // Names updated
+        text: "Tony finally speaks, his voice practical. 'Look, Pete. We've already made up our minds, right? We're not doing this to hurt you. We're doing this because we feel we have no other choice. For the simulation to collapse, or at least for us to get out of this... this localized distortion field around you, we think we all need to go away. Leave you. Completely alone.'\n\nJohn adds, 'If you're the anchor, Peter, then with no ships tied to you... maybe the harbor itself disappears.'", // Names updated
         onLoad: () => { advanceTime(0.5); },
         choices: [
             { text: "\"Alone? You're all just going to... leave?\"", nextScene: "exodus_ubers_setup" },
@@ -123,8 +123,8 @@ export const interventionScenes = {
             { text: "Watch them, a knot of anger and despair tightening in your chest.", nextScene: "exodus_campervan_setup" }
         ]
     },
-    "exodus_farewell_john": { // Renamed from exodus_farewell_crossy
-        text: "You try to say something to John, a mix of anger and pleading. He just shakes his head. 'Sorry mate. Hope you get it sorted.' He turns as his Uber pulls up.", // Name updated
+    "exodus_farewell_john": {
+        text: "You try to say something to John, a mix of anger, pleading, and a dawning horror that you might actually have to start navigating by street signs. He just shakes his head, a man already halfway to his next boarding gate or possibly just mentally cataloguing the optimal route for the hearse to the airport long-term parking. 'Sorry mate. Hope you get it sorted. My Uber's here – less conspicuous than the usual ride, all things considered.' He turns and is gone, presumably to a place with fewer existential quandaries.",
         onLoad: () => {
             gameState.friends.john.present = false;
             gameState.friends.john.friendship -= 2;
@@ -135,7 +135,7 @@ export const interventionScenes = {
         ]
     },
     "exodus_farewell_andy_janita": { // Renamed from exodus_farewell_neil_janita
-        text: "Andy gives a sad shrug. 'Maybe we'll see you on the other side, Peter. If there is one.' Janita is openly crying. 'I'll miss our music nights,' she whispers, before they both hurry to their ride. 'And the carrot cake...' she adds, a small, sad afterthought.", // Names updated
+        text: "Andy gives a dazed and confused shrug. 'Maybe we'll see you on the other side, Pete. If there is one.' Janita is openly crying. 'I'll miss our music nights,' she whispers, before they both hurry to their ride. 'And the carrot cake...' she adds, a small, sad afterthought.", // Names updated
         onLoad: () => {
             gameState.friends.neil.present = false; // neil is key for Andy
             gameState.friends.carrot.present = false; // carrot is key for Janita
@@ -148,7 +148,7 @@ export const interventionScenes = {
         ]
     },
     "exodus_campervan_setup": {
-        text: "With a finality that chills you, John, Andy, and Janita leave. Tony and Simone head towards the door. 'Our camper's out front,' Simone says. 'We packed light. Figured it's best.'", // Names updated
+        text: "With a finality that shocks you, John, Andy, and Janita leave. Tony and Simone head towards the door. 'Our camper's out front,' Simone says. 'We packed light. Figured it's best.'", // Names updated
         onLoad: () => {
             gameState.friends.john.present = false;
             gameState.friends.neil.present = false; // neil is key for Andy
@@ -203,7 +203,7 @@ export const interventionScenes = {
             if (gameState.friends.mel.trustInPeterTheory > 6 && gameState.friends.mel.friendship > 6) {
                 melOpening = "Mel breaks the heavy silence, her voice quiet but intense. 'Well, Peter. That was... something. They're scared, and they've made their choice. It doesn't mean they're right. What it means is that we have fewer variables to consider.'";
             } else if (gameState.friends.mel.friendship > 3) {
-                melOpening = "Mel sighs, running a hand through her hair. 'They're gone. All of them. Peter... are you okay? That was brutal.'";
+                melOpening = "Mel sighs, running a hand through her red hair. 'They're gone. All of them. Pete... are you okay? That was brutal.'";
             } else {
                 melOpening = "Mel watches you, her expression guarded. 'So. It's just us. What are you thinking, Peter?'";
             }
