@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Torquay Conundrum</title>
+    <title>The Glitch</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- NEW: Splash Screen -->
     <div id="splash-screen">
-        <h1>The Torquay Conundrum</h1>
-        <p>(or your chosen game title)</p>
+        <img src="images/splash_image.png" alt="The Torquay Conundrum Title Graphic" id="splash-image">
+        <h1>The Glitch</h1>
+        <p>(a simulation theory)</p>
         <button id="play-button">Play Game</button>
         <p class="voice-note">(Ensure your sound is on for voice narration)</p>
     </div>
 
-    <!-- Game container will be hidden initially -->
     <div id="game-container" style="display: none;">
         <div id="status-bar">
             <p><strong>Time:</strong> <span id="time-display">Hour 0</span></p>
@@ -23,15 +22,14 @@
         </div>
         <hr>
         <div id="story-text">
-            <!-- Story content will appear here -->
-        </div>
+            </div>
         <div id="choices-container">
-            <!-- Choices will appear here -->
-        </div>
+            </div>
         <div id="friend-status-container" style="margin-top: 20px; padding-top: 10px; border-top: 1px solid #ccc;">
             <h4>Friend Status:</h4>
-            <!-- Friend statuses will be dynamically added here by JavaScript -->
-        </div>
+            </div>
+
+        <img src="images/splash_image.png" alt="Decorative game graphic" id="ingame-placeholder-image">
     </div>
 
     <script type="module" src="js/main.js"></script>

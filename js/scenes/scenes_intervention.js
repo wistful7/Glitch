@@ -172,21 +172,31 @@ export const interventionScenes = {
             { text: "They're all gone. It's just you and Mel.", nextScene: "ground_zero_aftermath" }
         ]
     },
-    "exodus_mel_stays_check": {
-        text: () => {
-            let melResponse = "";
-            if (gameState.friends.mel.trustInPeterTheory > 4 && gameState.friends.mel.friendship > 4) {
-                melResponse = "Mel meets your gaze, her own filled with a complex mix of sorrow and resolve. She shakes her head slightly. 'No, Peter. I'm not going with them. Their theory... it's one possibility. I'm not convinced it's the only one, or the right one.'";
-            } else {
-                melResponse = "Mel looks down, then back at you, her face etched with worry. 'I... I don't know what to think, Peter. But no, I'm not leaving. Not like this.'";
-                gameState.friends.mel.friendship++;
-            }
-            return `As Tony and Simone leave, your eyes lock with Mel's. ${melResponse}`; // Names updated
-        },
-        choices: [
-            { text: "The campervan drives away. Silence descends.", nextScene: "ground_zero_aftermath" }
-        ]
+    // In js/scenes/scenes_intervention.js
+
+"exodus_mel_stays_check": {
+    text: () => {
+        // ... existing text function ...
     },
+    onLoad: () => { // <<< ADD THIS onLoad FUNCTION
+        gameState.friends.kel.present = false;   // kel is key for Tony
+        gameState.friends.kath.present = false;  // kath is key for Simone
+
+        // Mirror the friendship decrease and any other relevant effects
+        // from exodus_farewell_campervan's onLoad
+        gameState.friends.kel.friendship = Math.max(0, gameState.friends.kel.friendship - 2);
+        gameState.friends.kath.friendship = Math.max(0, gameState.friends.kath.friendship - 2);
+
+        // exodus_farewell_campervan also advances time by 0.3.
+        // Consider if this path should also advance time similarly.
+        // If so, add:
+        // advanceTime(0.3);
+        // The choice of whether to advance time here depends on game pacing design for this specific branch.
+    },
+    choices: [
+        { text: "The campervan drives away. Silence descends.", nextScene: "ground_zero_aftermath" }
+    ]
+},
     "ground_zero_aftermath": {
         text: () => {
             let melOpening = "";

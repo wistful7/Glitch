@@ -12,7 +12,7 @@ body {
     text-align: center; /* Center text for splash screen */
 }
 
-/* NEW: Splash Screen Styles */
+/* --- Splash Screen Styles --- */
 #splash-screen {
     display: flex;
     flex-direction: column;
@@ -28,6 +28,18 @@ body {
     z-index: 100; /* Ensure it's on top */
     padding: 20px;
     box-sizing: border-box;
+}
+
+/* NEW: Splash Screen Image Styles */
+#splash-image {
+    /* max-width: 70%; */ /* Previous value, now changed */
+    max-width: 350px;   /* NEW: Significantly smaller max width. Adjust this value as needed. */
+    /* Or you could use a smaller percentage of its container if you prefer: */
+    /* max-width: 30%; */
+    width: auto;        /* Allow it to shrink if its container is smaller than 250px, while respecting aspect ratio */
+    height: auto;       /* Maintain aspect ratio */
+    margin-bottom: 20px; /* Space between image and title */
+    border-radius: 8px; /* Optional: if you want rounded corners */
 }
 
 #splash-screen h1 {
@@ -62,9 +74,10 @@ body {
     background-color: #3498db;
     color: #ffffff;
 }
-/* END NEW: Splash Screen Styles */
+/* --- End Splash Screen Styles --- */
 
 
+/* --- Game Container & Content Styles --- */
 #game-container {
     background-color: #fff;
     padding: 25px;
@@ -74,6 +87,9 @@ body {
     max-width: 700px;
     text-align: left; /* Reset text-align for game content */
     /* margin: 20px; */ /* Remove margin if body is already centering it */
+    position: relative; /* ADDED: Needed for absolute positioning of child elements like the placeholder image */
+    /* Consider increasing min-height or bottom padding if placeholder is large and content is short */
+    /* padding-bottom: 100px; */ /* Example if placeholder needs more fixed space below content */
 }
 
 #status-bar {
@@ -92,14 +108,14 @@ body {
 
 #story-text {
     margin-bottom: 20px;
-    min-height: 100px; 
+    min-height: 100px;
 }
 
 .choice-button {
     display: block;
-    width: calc(100% - 20px); 
+    width: calc(100% - 20px); /* Adjust width calculation if padding/margins change */
     padding: 12px 10px;
-    margin: 8px 0;
+    margin: 8px 0; /* Provides vertical spacing between buttons */
     background-color: #007bff;
     color: white;
     border: none;
@@ -114,6 +130,13 @@ body {
     background-color: #0056b3;
 }
 
+#friend-status-container {
+    /* Styles for friend status container already in HTML via style attribute, can be moved here */
+    /* margin-top: 20px; */
+    /* padding-top: 10px; */
+    /* border-top: 1px solid #ccc; */
+}
+
 #friend-status-container h4 {
     margin-top: 0;
     margin-bottom: 10px;
@@ -122,4 +145,44 @@ body {
 .friend-status-item {
     font-size: 0.85em;
     margin-bottom: 5px;
+}
+
+/* NEW: In-Game Placeholder Image Styles */
+#ingame-placeholder-image {
+    position: absolute;
+    bottom: 25px; /* Align with game-container padding */
+    right: 25px;  /* Align with game-container padding */
+    width: 350px;  /* Adjust width as needed */
+    height: auto; /* Maintain aspect ratio */
+    /* height: 80px; */ /* Alternative: fixed height if aspect ratio isn't critical or image is fixed */
+    /* opacity: 0.7; /* Optional: make it slightly transparent if desired */
+    pointer-events: none; /* Optional: ensure it doesn't interfere with mouse events on elements potentially behind it */
+    border-radius: 4px; /* Optional */
+    z-index: 5; /* Optional: ensure it's above general content if there's any complex layering, but below popups if any */
+}
+/* --- End Game Container & Content Styles --- */
+
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 600px) {
+    #splash-image {
+        /* max-width: 85%; */ /* Previous value for small screens */
+        max-width: 60%;    /* NEW: Make it 60% of the screen width on smaller screens */
+                           /* This will be capped by the 250px from the rule above if 60% is larger */
+                           /* For example, on a 400px screen, 60% is 240px, so it will be 240px. */
+                           /* On a 300px screen, 60% is 180px. */
+        /* Alternatively, a smaller fixed max-width for small screens: */
+        /* max-width: 180px; */
+    }
+
+    #ingame-placeholder-image {
+        width: 80px; /* Smaller placeholder on small screens */
+        bottom: 15px; /* Adjust position for smaller padding/layout */
+        right: 15px;
+    }
+
+    /* Example: If friend status is tall or choices are many, you might need to adjust game container padding */
+    /* #game-container { */
+    /* padding-bottom: 120px; */ /* Ensure more space for placeholder if content is dense on small screens */
+    /* } */
 }
