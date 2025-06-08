@@ -29,7 +29,7 @@ export const finalActScenes = {
         ]
     },
     "gz_peter_suspects_mel": {
-        text: "Mel raises an eyebrow. 'Everything's a game, Peter, until it isn't. Right now, our game is against the clock. Are you going to play, or are you going to question your only remaining teammate?'",
+        text: "Mel raises an eyebrow, like Spock. 'Everything's a game, Peter, until it isn't. Right now, our game is against the clock. Are you going to play, or are you going to question your only remaining teammate?'",
         choices: [
             { text: "\"Alright, alright. Let's play. What do you suggest?\"", nextScene: "gz_final_hours_planning"},
             { text: "\"I can't trust anyone right now. Not even you.\"", nextScene: "ending_despair_early"} // This will be in scenes_endings.js
@@ -39,21 +39,35 @@ export const finalActScenes = {
         text: () => {
             const hoursLeft = Math.max(0, 48 - gameState.currentTime);
             let melPlan = "";
-            if (gameState.friends.mel.trustInPeterTheory > 6) {
-                melPlan = "Mel leans in. 'Alright, Mulder. If this is a construct, it has rules. And probably a core. Your friends leaving might have even created a power vacuum, or destabilized things enough for a... direct approach. I've been mapping the anomalies you've mentioned, cross-referencing them with local energy grids and... other things. There's a place. Point Impossible. The old radar station there. It's always had strange readings. If there's a 'heart' to this, it might be there. It's a long shot, but it's the only shot we have with " + hoursLeft.toFixed(1) + ` hour${hoursLeft.toFixed(1) === "1.0" ? "" : "s"} left.'`;
+
+            // This new dialogue fits perfectly when Mel is on board with the theory.
+            if (gameState.friends.mel.trustInPeterTheory > 6 || gameState.melKnowsAboutDeadline) {
+                melPlan = "Mel's expression is intense, her eyes sharp with sudden insight. 'Peter, I've been thinking about it all wrong. We're looking for glitches, but we should be looking for signposts.'\n\n" +
+                        "She leans forward. 'Point Impossible. The name has always felt... fateful. Deliberate. Almost like a name designed to scare people away from the one place that actually matters. Even in a simulation, there are clues within clues. It's not just possibly the way out. With only " + hoursLeft.toFixed(1) + " hours left on that clock, I think it's probably our only way.'";
             } else {
-                melPlan = "Mel looks grim. 'With " + hoursLeft.toFixed(1) + ` hour${hoursLeft.toFixed(1) === "1.0" ? "" : "s"} left, Peter, our options are limited. If you're right about this being a simulation, we need to do something drastic. Something that would force the system's hand. You mentioned Point Impossible before, didn't you? The old radar tower? It's as good a place as any to... make some noise.'`;
+                // This is the fallback for when Mel is still skeptical but desperate.
+                melPlan = "Mel looks exhausted but resolute. 'Peter, our options are limited. We can either wait for the next weird thing to happen, or we can force the issue. That radar station at Point Impossible you've mentioned before... it's as good a place as any to go and, I don't know... make some noise. It's a desperate move, but we're out of better ideas.'";
             }
+
             return `You and Mel face the dwindling hours. "Okay," you say, "What's our move?"\n\n${melPlan}`;
         },
-        onLoad: () => { advanceTime(1); }, // Time for planning
+        onLoad: () => { 
+            advanceTime(1); 
+        },
         choices: [
-            { text: "\"Point Impossible. The radar station. Let's do it.\"", nextScene: "final_act_point_impossible_approach" },
-            { text: "\"It's too risky. There has to be another way.\"", nextScene: "ending_inaction" } // This will be in scenes_endings.js
+            { 
+                text: "\"Point Impossible. The radar station. Let's do it. Clothes on!\"", 
+                nextScene: "final_act_point_impossible_approach" // <<< THIS IS THE FIX
+            },
+            { 
+                text: "\"It's too risky. There has to be another way.\"", 
+                nextScene: "ending_inaction" 
+            }
         ]
     },
     "final_act_point_impossible_approach": {
         text: "You and Mel make your way to Point Impossible. The derelict radar station looms against the pre-dawn sky, an unsettling silhouette. The air here feels incredibly charged, almost vibrating. The remaining time is short: just a few hours until the 48-hour mark.",
+        backgroundMusic: "audio/dramatic_loop.mp3",
         onLoad: () => {
             gameState.currentLocation = "Point Impossible";
             advanceTime(2); 
@@ -65,6 +79,7 @@ export const finalActScenes = {
     },
     "final_act_hesitation": {
         text: "Mel looks at you, her face determined. 'There's no turning back now, Peter. We're out of time and options. Whatever happens, we face it. Together?'",
+        backgroundMusic: "audio/dramatic_loop.mp3",
         choices: [
             { text: "\"Together.\"", nextScene: "final_act_breaching_station"},
             { text: "\"I can't. I just can't.\" (Give up)", nextScene: "ending_inaction"} // This will be in scenes_endings.js
@@ -72,6 +87,7 @@ export const finalActScenes = {
     },
     "final_act_breaching_station": {
         text: "The main door is rusted shut, but you find a smashed window. Inside, the control room is a wreck of old technology, but one central console hums with an unnatural green light. It seems to be the source of the vibrations. Strange symbols flicker across its dusty screen. This is it.",
+        backgroundMusic: "audio/dramatic_loop.mp3",
         onLoad: () => { advanceTime(0.5); },
         choices: [
             { text: "\"Mel, what do we do? Try to shut it down?\"", nextScene: "final_act_the_console" },
@@ -83,6 +99,7 @@ export const finalActScenes = {
             const hoursLeft = Math.max(0, 48 - gameState.currentTime);
             return `Mel studies the console. 'It's... not like any tech I've ever seen. It's responding to something.' She looks at you. 'To you, Peter. I think you need to interact with it. We have maybe ${hoursLeft.toFixed(1)} hour${hoursLeft.toFixed(1) === "1.0" ? "" : "s"} left. What do you do?'`;
         },
+        backgroundMusic: "audio/dramatic_loop.mp3",
         choices: [
             { text: "Reach out and touch the glowing screen.", nextScene: "simulation_collapse" },
             { text: "Try to smash the console.", nextScene: "simulation_collapse_violent" }
@@ -90,6 +107,7 @@ export const finalActScenes = {
     },
     "simulation_collapse": {
         text: "As your hand touches the screen, an earsplitting whine fills the air. The green light flares, engulfing the room. The vibrations intensify, shaking the very foundations of reality. Torquay, the radar station, everything begins to pixelate and fragment around you. You feel a profound sense of disconnection, then... nothingness.",
+        backgroundMusic: "audio/dramatic_loop.mp3",
         onLoad: () => { gameState.currentTime = 47.9; }, // Set time just before 48 for the twist
         choices: [
             { text: "Darkness...", nextScene: "the_twist_reveal" }
@@ -97,6 +115,7 @@ export const finalActScenes = {
     },
     "simulation_collapse_violent": {
         text: "You grab a piece of debris and smash it into the console. Sparks fly. The green light turns blood red, and a deafening klaxon blares. The world outside the window shatters like glass, revealing a chaotic void of code and light. You're thrown to the ground as the station itself deconstructs around you.",
+        backgroundMusic: "audio/dramatic_loop.mp3",
         onLoad: () => { gameState.currentTime = 47.9; }, // Set time just before 48 for the twist
         choices: [
             { text: "Chaos...", nextScene: "the_twist_reveal" }

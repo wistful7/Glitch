@@ -32,14 +32,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const splashScreen = document.getElementById('splash-screen');
     const playButton = document.getElementById('play-button');
     const gameContainer = document.getElementById('game-container');
+    const backgroundAudio = document.getElementById('background-audio'); // Get the audio element
 
-    // Get references to the HTML elements the game engine will need (once game starts)
+    // Get references for the game engine
     const storyTextElement = document.getElementById('story-text');
     const choicesContainer = document.getElementById('choices-container');
     const timeDisplay = document.getElementById('time-display');
     const certaintyDisplay = document.getElementById('certainty-display');
     const friendStatusContainer = document.getElementById('friend-status-container');
 
+    // Bundle them into an object to pass to the engine
     const domElements = {
         storyTextElement,
         choicesContainer,
@@ -50,17 +52,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (playButton) {
         playButton.addEventListener('click', () => {
-            console.log("Play button clicked. Initializing engine and starting game...");
-            if (splashScreen) splashScreen.style.display = 'none'; // Hide splash screen
-            if (gameContainer) gameContainer.style.display = 'block'; // Show game container
+            if (splashScreen) splashScreen.style.display = 'none';
+            if (gameContainer) gameContainer.style.display = 'block';
 
-            // Initialize the game engine with all scenes and the DOM elements
-            // The startGame function will be called by initializeEngine once voices are ready (or immediately if no speech)
+            // Start playing the default background music
+            if (backgroundAudio) {
+                backgroundAudio.volume = 0.3; // Set a nice ambient volume
+                backgroundAudio.play();
+            }
+
             initializeEngine(allGameScenes, domElements, startGame);
         });
-    } else {
-        // Fallback if splash screen somehow isn't there, try to start directly (might have audio issues)
-        console.warn("Play button not found. Attempting to initialize engine directly.");
-        initializeEngine(allGameScenes, domElements, startGame);
     }
 });

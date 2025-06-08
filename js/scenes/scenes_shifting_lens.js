@@ -65,8 +65,8 @@ export const shiftingLensScenes = {
     },
     "pub_observational_approach": {
         text: () => {
-            let scene_text = "You decide to deploy your keen observational skills, scanning the room intently. The chatter, the clinking glasses, the low hum of the coolers – all standard pub ambience. Or is it? You narrow your eyes. That couple in the corner... they've had the exact same 'surprised-then-laughing' reaction three times in the last five minutes. Textbook limited dialogue loop. I've seen more sophisticated emotional range in a beta-test chatbot designed to sell insurance.\n\n";
-            scene_text += "Mel watches you, a faint smile playing on her lips. 'And what exactly are we hoping to find, Mulder?' she asks, her voice laced with that familiar ironic dryness. 'The source code hidden in the beer nuts? Or perhaps a tear in the very fabric of the pub carpet that leads to another dimension? Do try not to make a scene if you find it; I've just ordered another drink.'";
+            let scene_text = "You decide to deploy your keen observational skills, scanning the room intently. The chatter, the clinking glasses, – all standard pub ambience. Or is it? You narrow your eyes. That couple in the corner... they've had the exact same 'surprised-then-laughing' reaction three times in the last five minutes. Are they in a loop?\n\n";
+            scene_text += "Mel watches you, a faint smile playing on her lips. 'And what exactly are we hoping to find, Mulder?' she asks drily. 'The source code hidden in the beer nuts? Or perhaps a tear in the very fabric of the pub carpet that leads to another dimension? Do try not to make a scene if you find it; I've just ordered another drink.'";
             return scene_text;
         },
         choices: [
@@ -103,7 +103,7 @@ export const shiftingLensScenes = {
         ]
     },
     "observe_bar_staff": {
-        text: "You watch one of the bartenders. He wipes the counter, serves a beer, takes payment, gives change... then moves to the other end, wipes the counter, serves a beer, takes payment, gives change. It's efficient, sure, but is it *too* perfect? Too looped? Probably just a busy night.",
+        text: "You watch one of the bartenders. He wipes the counter, serves a beer, takes payment, gives change... then moves to the other end, wipes the counter, serves a beer, takes payment, gives change. It's efficient, sure, but is it too perfect? Too looped? Probably just a busy night.",
         onLoad: () => { gameState.peterSimulationCertainty = Math.min(10, gameState.peterSimulationCertainty + 1); gameState.playerNoticedSpecificAnomaly = true; gameState.previousAnomaly = "bartender_loop";},
         choices: [
             {
@@ -141,7 +141,7 @@ export const shiftingLensScenes = {
                 melResponse += " She adds, more quietly, 'But... the way he polishes those glasses... there is a certain rhythm to it, isn't there? Almost too perfect.'";
                 gameState.friends.mel.trustInPeterTheory = Math.min(10, gameState.friends.mel.trustInPeterTheory + 1);
             } else {
-                melResponse += " 'Are you sure you're not just looking for patterns where there aren't any?'";
+                melResponse += " 'Are you sure you're not just looking for patterns where there aren't any? Remember, you can't normally find your way home'";
                 gameState.friends.mel.suspicion = Math.min(10, gameState.friends.mel.suspicion +1);
             }
             return `You point out the bartender's seemingly looped actions.\n${melResponse}`;
@@ -153,9 +153,9 @@ export const shiftingLensScenes = {
     },
     "pub_mel_ponders_anomaly": {
         text: () => {
-            let melText = "Mel is quiet for a moment, observing. 'Alright, Peter. Let's say, for the sake of argument, that you *did* observe a minor... inconsistency.'";
+            let melText = "Mel is quiet for a moment, observing. 'Alright, Peter. Let's say, for the sake of argument, that you did observe a minor... inconsistency.'";
             if (gameState.friends.mel.trustInPeterTheory > 3) {
-                melText += " 'What's your grand theory? And more importantly, what do you propose we *do* about it, right here, right now?' Her tone is serious, almost challenging, but with an undercurrent of genuine curiosity."
+                melText += " 'What's your grand theory? And more importantly, what do you propose we do about it, right here, right now?' Her tone is serious, almost challenging, but with an undercurrent of genuine curiosity."
             } else {
                 melText += " 'It's still a massive leap to 'simulation gone wrong'. But I'm... intrigued by your conviction.' She sounds like she's humouring a child, but her eyes are sharp."
             }
@@ -187,9 +187,9 @@ export const shiftingLensScenes = {
     },
    "esplanade_confidential_intro": {
         text: () => {
-            let sceneDescription = "Mel agrees, a flicker of something unreadable in her eyes. 'Fresh air, yes. And perhaps fewer potential witnesses to your... unraveling.' You both step out of the Torquay Hotel into the cool, surprisingly un-glitchy night air. The Esplanade is quieter, the waves performing their usual rhythmic crashing – impressively consistent, really.\n\n";
-            sceneDescription += "As you walk, Peter, attempting to lead the way to a 'suitably discreet bench,' you confidently stride past three perfectly good empty ones. Mel, without missing a beat, gently steers you back. 'This one looks adequately brooding, don't you think? Or were you aiming for that particularly forlorn-looking ghost gum another kilometer down the path as our designated spot for existential dread?'\n\n";
-            sceneDescription += "Just as you're about to sit, Mel stops, pointing with her chin. 'Well, that's not very festive.' Scattered on the pavement near a struggling saltbush are several dozen dead bees, looking like tiny, fuzzy apostrophes of doom. 'Now, did I manifest those, or are they just a particularly grim form of local confetti?' she muses, poking one gently with the toe of her shoe. She gives that quick, dismissive headshake. 'Never mind. The change of scenery, dead bees notwithstanding, feels significant.'";
+            let sceneDescription = "Mel agrees, a flicker of something unreadable in her eyes. As you walk along The Esplanade, you pretend you know where you are going. \n\n";
+            sceneDescription += "Mel, without missing a beat, gently steers you. 'This bench looks adequately brooding for a chat, don't you think?' Just as you're about to sit, Mel stops. 'Well, that's not very festive.' Scattered on the pavement are several dozen dead bees, looking like tiny, fuzzy apostrophes of doom.\n\n";
+            sceneDescription += "'Now, did I manifest those, or are they just a particularly grim form of local confetti?' she muses.";
             return sceneDescription;
         },
         onLoad: () => {
@@ -215,17 +215,39 @@ export const shiftingLensScenes = {
     },
     "esplanade_mel_reacts_theory": {
         text: () => {
-            let response = "Mel listens intently, her expression unreadable for a moment. She looks out at the dark ocean. 'A story someone else is writing...' she repeats softly. ";
-            if (gameState.friends.mel.trustInPeterTheory > 2 || gameState.friends.mel.friendship > 6) {
-                response += "'And what if,' she says, her voice barely above a whisper, 'some of the characters *want* the story to end, Peter? Or want to write their own chapter?' She quickly glances at you. 'Hypothetically speaking, of course. If one were to entertain such a wild notion.'";
-                gameState.friends.mel.trustInPeterTheory = Math.min(10, gameState.friends.mel.trustInPeterTheory + 2);
+            let response = "";
+
+            // Check if Peter has told Mel about the deadline
+            if (gameState.melKnowsAboutDeadline) {
+                // --- PATH 1: Mel KNOWS about the "48 hours" claim ---
+                response = "Mel turns from the dark ocean, her arms crossed against the cold sea breeze. 'So this is it, Peter? The grand unifying theory? You're connecting a few odd moments to that... that '48 hours' message you think you got?'\n\n";
+
+                // Her reaction still depends on her level of trust
+                if (gameState.friends.mel.trustInPeterTheory > 2) {
+                    response += "She lowers her voice. 'It's a massive leap. But the deadline... that's the one part that sounds less like a random glitch and more like a rule of the game. So, if your theory holds, what happens when time is up?'";
+                    gameState.friends.mel.trustInPeterTheory = Math.min(10, gameState.friends.mel.trustInPeterTheory + 1);
+                } else {
+                    response += "She sighs, a puff of mist in the air. 'You're building a whole conspiracy on a feeling and a single, impossible message. It sounds more like paranoia than a paradigm shift. Are you *sure* you're okay?'";
+                    gameState.friends.mel.suspicion = Math.min(10, gameState.friends.mel.suspicion + 1);
+                }
+
             } else {
-                response += "'That's a very... creative way of looking at things, Peter.' She offers a small, tight smile. 'But it sounds more like an existential crisis than a system glitch. Are you sure you're okay?'";
-                gameState.friends.mel.suspicion = Math.min(10, gameState.friends.mel.suspicion + 1);
+                // --- PATH 2: Mel DOES NOT know (The original text) ---
+                response = "Mel listens intently, her expression unreadable for a moment. She looks out at the dark ocean. 'A story someone else is writing...' she repeats softly. ";
+                
+                if (gameState.friends.mel.trustInPeterTheory > 2 || gameState.friends.mel.friendship > 6) {
+                    response += "'And what if,' she says, her voice barely above a whisper, 'some of the characters *want* the story to end, Peter? Or want to write their own chapter?' She quickly glances at you. 'Hypothetically speaking, of course. If one were to entertain such a wild notion.'";
+                    gameState.friends.mel.trustInPeterTheory = Math.min(10, gameState.friends.mel.trustInPeterTheory + 2);
+                } else {
+                    response += "'That's a very... creative way of looking at things, Peter.' She offers a small, tight smile. 'But it sounds more like an existential crisis than a system glitch. Are you sure you're okay?'";
+                    gameState.friends.mel.suspicion = Math.min(10, gameState.friends.mel.suspicion + 1);
+                }
             }
             return response;
         },
-        onLoad: () => { advanceTime(0.3); },
+        onLoad: () => { 
+            advanceTime(0.3); 
+        },
         choices: [
             { text: "\"Are you saying you feel it too, Mel? That you want out?\"", condition: () => gameState.friends.mel.trustInPeterTheory > 3, nextScene: "esplanade_mel_confides_hint" },
             { text: "\"Hypothetically... what would make a character want that?\"", nextScene: "esplanade_discuss_hypothetical" },
@@ -246,13 +268,13 @@ export const shiftingLensScenes = {
         },
         onLoad: () => { advanceTime(0.3); },
         choices: [
-            { text: "\"A cage? So you *do* feel trapped!\"", condition: () => gameState.friends.mel.trustInPeterTheory > 2, nextScene: "esplanade_mel_confides_hint" },
+            { text: "\"A cage? So you do feel trapped!\"", condition: () => gameState.friends.mel.trustInPeterTheory > 2, nextScene: "esplanade_mel_confides_hint" },
             { text: "\"What kind of things make you feel that way?\"", nextScene: "esplanade_discuss_hypothetical" },
             { text: "\"Yeah, you're right. Just feelings. Thanks, Mel.\"", consequence: () => { gameState.peterSimulationCertainty--; }, nextScene: "esplanade_mel_offers_comfort" }
         ]
     },
     "esplanade_mel_confides_hint": {
-        text: "Mel looks around, as if checking they're truly alone. 'Let's just say, Peter, that I believe in keeping an open mind. And if there *was* a way to... verify things... or to ensure one's own autonomy in a system that felt predetermined... I'd consider it.' She meets your gaze directly. 'But it would have to be smart. Careful. Not just... shouting about glitches in a pub.'",
+        text: "Mel looks around, as if checking they're truly alone. 'Let's just say, Peter, that I believe in keeping an open mind. And if there was a way to... verify things... or to ensure one's own autonomy in a system that felt predetermined... I'd consider it.' She meets your gaze directly. 'But it would have to be smart. Careful. Not just... shouting about glitches in a pub.'",
         onLoad: () => { gameState.friends.mel.trustInPeterTheory = Math.min(10, gameState.friends.mel.trustInPeterTheory + 2); gameState.friends.mel.friendship = Math.min(10, gameState.friends.mel.friendship +1); },
         choices: [
             { text: "\"So you'll help me? We can figure this out together!\"", nextScene: "esplanade_mel_cautious_ally" },
@@ -304,6 +326,7 @@ export const shiftingLensScenes = {
     },
     "the_return_or_departure_esplanade": { // MODIFIED to correctly call rejoin_friends_at_pub
         text: "You and Mel head back into the Torquay Hotel. The atmosphere feels different now, filtered through your recent conversation. Some of your friends might still be there.",
+        backgroundMusic: "audio/thelake.mp3",
         onLoad: () => { gameState.currentLocation = "Torquay Hotel"; advanceTime(0.1); },
         choices: [
             { text: "Rejoin the group.", nextScene: "rejoin_friends_at_pub" },
@@ -314,15 +337,15 @@ export const shiftingLensScenes = {
 
     // --- DEVELOPED CAFE SCENES ---
     "suggest_latenight_cafe": {
-        text: "You suggest heading to the 'All Nighter' cafe down the road, a place known for its questionable coffee and interesting late-night patrons. Mel considers it.",
+        text: "You suggest the 'All Nighter' cafe. 'It's where Bowlz used to be,' you add, 'before it was condemned for 'foundation issues' last spring.' Strange, since the new owners moved in a week later without so much as a single tradesman in sight. Mel gives a slow, knowing nod.",
         onLoad: () => { advanceTime(0.1); },
         choices: [
-            { text: "\"Sounds good, I'm in.\" (Mel agrees)", nextScene: "latenight_cafe_arrival" },
+            { text: "\"Hmmm. Maybe there's a clue. I'm in.\" (Mel agrees)", nextScene: "latenight_cafe_arrival" },
             { text: "\"Nah, I think I'm done for the night.\" (Mel declines)", nextScene: "leaving_pub_options" }
         ]
     },
     "latenight_cafe_arrival": {
-        text: "The 'All Nighter' lives up to its name – a haven for insomniacs and those with nowhere else to be. Fluorescent lights hum over sticky tabletops. A couple of solitary figures stare into their cups, and a lone barista with tired eyes gives you a nod. The air smells of stale coffee and old fryer oil.",
+        text: "The 'All Nighter' lives up to its name – a haven for insomniacs and those with nowhere else to be. Fluorescent lights hum over sticky tabletops. A couple of solitary figures stare into their cups, and a lone barista, Sunny, with tired eyes gives you a nod. The air smells of stale coffee and old fryer oil.",
         onLoad: () => {
             gameState.currentLocation = "All Nighter Cafe";
             advanceTime(0.2);
@@ -422,7 +445,7 @@ export const shiftingLensScenes = {
         text: "Mel nods, a new resolve in her eyes. 'Alright, Peter. If these are pieces, let's try to make a picture. This place, the pub... any other locations showing this... heightened strangeness? We need a common denominator, or a focal point.'",
         onLoad: () => { advanceTime(0.3); gameState.friends.mel.trustInPeterTheory = Math.min(10, gameState.friends.mel.trustInPeterTheory + 1); },
         choices: [
-            { text: "\"Point Impossible. The old radar station. It's always felt wrong.\"", nextScene: "gz_final_hours_planning" },
+            { text: "\"Point Impossible. The old radar station. It's always felt wrong.\"", nextScene: "pre_final_planning_check" },
             { text: "\"Let's go back to my place and map everything out.\"", nextScene: "suggest_peters_place" },
             { text: "\"I need more time to think. Let's just get out of this cafe first.\"", nextScene: "latenight_cafe_decision_go_home" }
         ]
@@ -443,54 +466,83 @@ export const shiftingLensScenes = {
     // and also "leaving_pub_options" in scenes_endings.js
     "suggest_peters_place": {
         text: () => {
-            let context = (gameState.currentLocation === "Leaving Cafe") ? "after that... enlightening experience at the cafe from which my tastebuds may never recover" : "after the stimulating intellectual workout that is the Torquay Hotel pub quiz night";
-            let peterDirections = "";
-            // This is a hypothetical spot where Peter might give directions. We'll add a more concrete example if a choice leads to him actually giving them.
-            // For now, let's focus on Mel's reaction if he *were* to give them.
-            // Mel might say, "Your place, Peter? Splendid. And how do we get there? Second star to the right and straight on 'til morning, or do you have a more... terrestrial set of instructions involving, perhaps, a rogue garden gnome and a wheelie bin with strong opinions?"
+            // This function now checks the current location to provide the correct context.
+            if (gameState.currentLocation.includes("Teleport Aftermath")) {
+                // --- PATH A: Arriving from the disorienting teleport ---
+                return "Your voice is still shaky from the teleport. 'We need to get somewhere safe, somewhere private,' you say. 'My place. Now. We need to figure out what the hell just happened.' Mel, looking equally rattled, just nods wordlessly. Getting off the street seems like the only sane option right now.";
 
-            // For now, just a general offer from Peter:
-            return `You suggest heading back to your place. 'It's quieter there ${context},' you offer, 'we can talk properly, and I can show you my collection of rare synthesiser instruction manuals. Utterly riveting. Plus, no risk of encountering rogue bee incidents, one hopes.' Mel considers this with the gravity one might afford a proposal to colonise Mars.`;
+            } else if (gameState.currentLocation === "Leaving Cafe") {
+                // --- PATH B: Arriving from the weird cafe ---
+                return `You suggest heading back to your place. 'It's quieter there after that... enlightening experience at the cafe,' you offer, 'we can talk properly without any more phantom-sipping patrons.' Mel considers this with the gravity one might afford a proposal to colonise Mars.`;
+            
+            } else {
+                // --- PATH C: The default path for leaving the pub ---
+                return `You suggest heading back to your place. 'It's quieter there after the stimulating intellectual workout that is the Torquay Hotel pub quiz night,' you offer, 'we can talk properly, and I can show you my collection of rare synthesiser instruction manuals. Utterly riveting. Plus, no risk of encountering rogue bees.' Mel considers this with the gravity one might afford a proposal to colonise Mars.`;
+            }
         },
-        onLoad: () => { advanceTime(0.1); },
+        onLoad: () => { 
+            advanceTime(0.1); 
+        },
         choices: [
             {
                 text: () => {
-                    if (gameState.friends.mel.friendship > 3 || gameState.friends.mel.trustInPeterTheory > 2) {
-                        return "Mel: \"Your collection of synth manuals, you say? How could I possibly resist such an offer? Lead on, Macduff... and try not to walk past your own house this time. I'll keep an eye out for the 'startled kangaroo' cloud formation you use as a landmark.\"";
+                    // This text function also benefits from being context-aware
+                    if (gameState.currentLocation.includes("Teleport Aftermath")) {
+                        return "Mel nods: \"Good idea. Let's go.\"";
                     }
-                    return "Mel: \"Your place it is. But you're navigating, Peter, and if we end up in Queensland, I'm blaming the algorithm.\""; // Default acceptance if conditions met
+                    if (gameState.friends.mel.friendship > 3 || gameState.friends.mel.trustInPeterTheory > 2) {
+                        return "Mel: \"Your collection of synth manuals, you say? Lead on... and try not to walk past your own house this time.\"";
+                    }
+                    return "Mel: \"Your place it is. But you're navigating, Peter, and if we end up in Queensland, I'm blaming the algorithm.\"";
                 },
-                condition: () => gameState.friends.mel.friendship > 3 || gameState.friends.mel.trustInPeterTheory > 2,
-                nextScene: "at_peters_place_walk_or_direct" // New intermediate scene to decide if we narrate the walk
+                condition: () => gameState.friends.mel.present && (gameState.friends.mel.friendship > 3 || gameState.friends.mel.trustInPeterTheory > 2 || gameState.currentLocation.includes("Teleport Aftermath")),
+                nextScene: "at_peters_place_walk_or_direct"
             },
-            // ... other existing choices for Mel declining, or Peter going alone ...
             {
-                text: "Mel: \"You know, Peter, as tempting as 'rare synthesiser instruction manuals' sounds, I think I'll brave the wilds of my own apartment. It's been a night.\"",
-                condition: () => !(gameState.friends.mel.friendship > 3 || gameState.friends.mel.trustInPeterTheory > 2),
+                text: "Mel: \"You know, Peter, as tempting as that sounds, I think I'll just head home. It's been a night.\"",
+                condition: () => gameState.friends.mel.present && !(gameState.friends.mel.friendship > 3 || gameState.friends.mel.trustInPeterTheory > 2 || gameState.currentLocation.includes("Teleport Aftermath")),
                 nextScene: "mel_declines_peters_place"
             },
             {
-                text: "\"Actually, my brain feels like it's been through a spin cycle. I just need to crash. You go ahead to yours if you want.\"",
+                text: "\"Actually, my brain feels like it's been through a spin cycle. I just need to crash.\"",
+                condition: () => gameState.friends.mel.present, // Only show if Mel is there to talk to
                 nextScene: "go_home_alone_intro_todo"
+            },
+            {
+                text: "\"I need to get somewhere safe and think. My place.\"",
+                condition: () => !gameState.friends.mel.present, // Only show if Peter is alone
+                nextScene: "peters_place_alone_next_morning" // Or another appropriate solo scene
             }
         ]
     },
 
     // NEW Intermediate scene (conceptual, you'd define it fully)
     "at_peters_place_walk_or_direct": {
-        text: "Mel has agreed to come to your place.",
+        text: () => {
+            return "Mel gives a firm nod, her expression a mixture of trouble and grim resolve. 'Alright, Peter. Your place. Let's go sort this mess out.'\n\nThe decision hangs in the air. Leaving the relative safety of Torquay's public spaces to head into your private chaos feels like a significant turning point.";
+        },
+        onLoad: () => {
+            // A small time advance for the decision and transition
+            advanceTime(0.1);
+            gameState.currentLocation = "Leaving for Peter's Place";
+        },
         choices: [
-            {text: "Narrate the walk there (potential for spatial awareness quirks).", nextScene: "walk_to_peters_place_narrated"},
-            {text: "Arrive directly at Peter's place.", nextScene: "at_peters_place_arrival"}
+            {
+                text: "\"Let's walk. The cool air might help us think clearly.\"",
+                nextScene: "walk_to_peters_place_narrated"
+            },
+            {
+                text: "\"Okay, let's not waste any time. It's this way. I think.\"",
+                nextScene: "at_peters_place_arrival"
+            }
         ]
     },
 
     // NEW Scene: if narrating the walk
     "walk_to_peters_place_narrated": {
         text: () => {
-            let scene_text = "You set off towards your house, Mel accompanying you with an air of amused resignation. 'Alright, Peter,' she says, 'standard procedure: you point vaguely in the direction you *think* home is, and I'll handle the actual micro-navigation past any ghost gums that look particularly judgemental or rogue wheelie bins that might have shifted since breakfast.'\n\n";
-            scene_text += "True to form, you almost lead her past your street entirely, distracted by a particularly interesting pattern of lichen on a telegraph pole. 'Ahem,' Mel coughs pointedly, 'Unless your house has recently camouflaged itself as a very convincing patch of agapanthus, I believe this is us.' You sheepishly backtrack to your gate, where a lone Ugg boot lies forlornly on the porch as if it tried to make a bid for freedom.";
+            let scene_text = "You set off towards your house, Mel playing hopscotch with dead bees. 'Alright, Peter,' she says, 'standard procedure: you point vaguely in the direction you - think - home is, and I'll handle the actual micro-navigation past any trees that look vaguely familiar or rogue wheelie bins that no one ever uses.'\n\n";
+            scene_text += "True to form, you almost lead her past your street entirely. 'Ahem,' Mel coughs pointedly, 'I believe this is us.'";
             return scene_text;
         },
         onLoad: () => {
@@ -526,25 +578,39 @@ export const shiftingLensScenes = {
         ]
     },
     "at_peters_place_arrival": {
-        text: () => {
-            let placeDescription = Math.random() > 0.5 ?
-                "Your apartment, or 'command centre for the bewildered' as Mel might call it, is quiet. The usual endearing chaos of synthesizer cables resembling metallic spaghetti, stacks of obscure philosophy books, and at least one pair of Ugg boots attempting to assimilate with a pile of psychedelic-print hippie pants, is reassuringly familiar." :
-                "Your place is a veritable museum of analogue synthesizers, their knobs and patch bays gleaming دعوت‌آمیزانه (invitingly) under the low light. A distinct scent of solder, old circuits, and possibly despair, hangs in the air. Your favourite tie-dye hippie pants are draped artfully over a vintage Moog.";
-            return `${placeDescription} Mel steps inside, taking it all in with an appreciative sniff. 'So, this is the inner sanctum,' she remarks, her eyes twinkling. 'Where genius wrestles with questionable fashion choices and the mysteries of the universe are probed with… well, with whatever those blinking things do. Do any of them make a decent cup of tea?'`;
-        },
-        onLoad: () => {
-            gameState.currentLocation = "Peter's Place";
-            advanceTime(0.5);
-        },
-        choices: [
-            { text: "\"Let's go over everything we've seen and heard tonight.\"", nextScene: "peters_place_mapping_theories" },
-            { text: "\"Want a coffee? Or something stronger? We need to think.\"", nextScene: "peters_place_offer_drink" },
-            { text: "\"Honestly, Mel, I'm just glad you're here. I don't know what to make of all this.\"", nextScene: "peters_place_vulnerable_chat" }
-        ]
+    text: () => {
+        const sceneDescription = "You unlock the door and a low, electronic hum spills out into the hallway, a sound you find comforting but which makes Mel hesitate. \n\n" +
+                                "Wires snake across the floor like black vines, connecting machines that murmur and click in their sleep. The air is thick with the scent of hot dust and ozone. Scraps of paper covered in frantic diagrams and cryptic notes are pinned to nearly every available surface.\n\n" +
+                                "Mel steps inside, scans the room, from the web of cables to the paranoid-looking charts on the wall. 'Good lord, Peter,' she breathes, her voice quiet. 'This isn't a studio... it's a nest.'";
+        return sceneDescription;
+    },
+    onLoad: () => {
+        gameState.currentLocation = "Peter's Place";
+        advanceTime(0.5);
+    },
+    choices: [
+        { text: "\"It's where I do my thinking. Let's go over everything.\"", nextScene: "peters_place_mapping_theories" },
+        { text: "\"Want a coffee? Or something stronger? We need to clear our heads.\"", nextScene: "peters_place_offer_drink" },
+        { text: "\"I know it's a lot. I'm just... glad you're here.\"", nextScene: "peters_place_vulnerable_chat" }
+    ]
     },
     "peters_place_mapping_theories": {
-        text: "You grab some paper, or a whiteboard if you have one, and start listing everything: the singer, the repetitive conversations, the friends' reactions, any feelings or specific anomalies. Mel watches, occasionally asking a sharp question or offering a counter-theory.",
-        onLoad: () => { advanceTime(1); gameState.peterSimulationCertainty = Math.min(10, gameState.peterSimulationCertainty + 1); },
+        text: () => {
+            let sceneText = "You grab a whiteboard, or the back of a large pizza box, and start frantically listing everything you can remember. Mel watches, her arms crossed, occasionally asking a sharp, clarifying question.\n\n";
+
+            if (gameState.melKnowsAboutDeadline) {
+                // If Mel knows, the deadline is the central piece of evidence.
+                sceneText += "You write 'LEVI: \"YOU HAVE 48 HOURS\" -- DIRECT MESSAGE?' at the very top, underlining it twice. Everything else—the repeating conversations, the dead bees, the friends' strange behaviour—you list underneath as supporting data. The session feels less like a brainstorming and more like a desperate race against a known, if utterly insane, countdown clock.";
+            } else {
+                // If Mel doesn't know, the focus is more on gathering general proof.
+                sceneText += "You list the singer's glitch, the repetitive pub chatter, the strange feeling of being watched... a web of disparate, unsettling events. Without a specific threat, it's a confusing mess of circumstantial evidence. You're trying to prove a pattern exists, not just that you're losing your mind.";
+            }
+            return sceneText;
+        },
+        onLoad: () => { 
+            advanceTime(1); 
+            gameState.peterSimulationCertainty = Math.min(10, gameState.peterSimulationCertainty + 1); 
+        },
         choices: [
             {
                 text: "Mel: \"Okay, if we look at this logically... what's the one thread that connects all the major anomalies?\"",
@@ -563,7 +629,7 @@ export const shiftingLensScenes = {
         text: "Mel taps the board. 'Besides you, obviously. What if it's not just *you* being the anchor, but something you're *doing*, or a place you keep returning to? Or something that's trying to communicate *through* you?' Her analytical mind is clearly engaged.",
         onLoad: () => { gameState.friends.mel.trustInPeterTheory = Math.min(10, gameState.friends.mel.trustInPeterTheory + 1); },
         choices: [
-            { text: "\"Communicate? Like the console at Point Impossible might be?\"", nextScene: "gz_final_hours_planning" },
+            { text: "\"Communicate? Like the console at Point Impossible might be?\"", nextScene: "pre_final_planning_check" },
             { text: "\"That's an idea... What are you getting at?\"", nextScene: "peters_place_further_theorizing_with_mel" },
             { text: "\"I'm still leaning towards me being the target, or the key.\"", nextScene: "peters_place_mapping_theories" }
         ]
@@ -572,7 +638,7 @@ export const shiftingLensScenes = {
         text: "You and Mel spend another hour dissecting the events, looking for patterns. The theories become wilder, more specific. You feel a strange sense of camaraderie in this late-night session, a shared descent into the rabbit hole. The clock is ticking relentlessly.",
         onLoad: () => { advanceTime(1); gameState.peterSimulationCertainty++; gameState.friends.mel.trustInPeterTheory++; },
         choices: [
-            { text: "\"I think we have a solid lead now. We need to act.\"", nextScene: "gz_final_hours_planning" },
+            { text: "\"I think we have a solid lead now. We need to act.\"", nextScene: "pre_final_planning_check" },
             { text: "\"We're going in circles. We need sleep.\"", nextScene: "peters_place_suggest_rest" }
         ]
     },
@@ -580,7 +646,7 @@ export const shiftingLensScenes = {
         text: "Mel sighs, looking at your web of connections. 'Peter, I want to believe you, or at least understand. But this... this is a lot of leaps of faith. We need something more concrete, or we need to consider that the stress is getting to us.'",
         onLoad: () => { gameState.friends.mel.suspicion = Math.min(10, gameState.friends.mel.suspicion + 1); },
         choices: [
-            { text: "\"But the concrete things *are* the glitches, Mel!\"", nextScene: "peters_place_mapping_theories" },
+            { text: "\"But the concrete things are the glitches, Mel!\"", nextScene: "peters_place_insistence_response" },
             { text: "\"You're right. I'm exhausted. Maybe rest will bring clarity.\"", nextScene: "peters_place_suggest_rest" },
             { text: "\"Fine. If you won't help, I'll figure it out myself!\"", consequence: ()=>{gameState.friends.mel.friendship--; gameState.friends.mel.trustInPeterTheory--;}, nextScene: "peters_place_peter_goes_solo_from_home" }
         ]
@@ -594,7 +660,7 @@ export const shiftingLensScenes = {
         ]
     },
     "peters_place_offer_drink": {
-        text: "You offer Mel a drink – water, tea, maybe an old beer you find in the fridge. She accepts a water. The simple act of hospitality creates a small island of calm in the storm of the night.",
+        text: "You offer Mel a drink – water, tea. She doesn't drink beer. She accepts a water. The simple act of hospitality creates a small island of calm in the storm of the night.",
         onLoad: () => { advanceTime(0.2); },
         choices: [
             { text: "Talk about how you're really feeling.", nextScene: "peters_place_vulnerable_chat" },
@@ -624,7 +690,16 @@ export const shiftingLensScenes = {
     "peters_place_suggest_rest": {
         text: () => {
             const hoursLeft = Math.max(0, 48 - gameState.currentTime);
-            return `Exhaustion is setting in. 'Mel, maybe we should try and get some sleep. We're not thinking straight. We still have about ${hoursLeft.toFixed(0)} hours.'`;
+            let sceneText = "Exhaustion is setting in, making the notes on your whiteboard swim before your eyes. 'Mel, maybe we should try and get some sleep,' you say. 'We're not thinking straight.'";
+
+            if (gameState.melKnowsAboutDeadline) {
+                // If Mel knows about the deadline, Peter can mention it to her.
+                sceneText += ` You add, your voice low, 'According to that... message... we still have about ${hoursLeft.toFixed(0)} hours left.'`;
+            } else {
+                // If Mel DOES NOT know, the thought about the deadline is Peter's internal monologue.
+                sceneText += ` You keep the next thought to yourself, a cold knot in your stomach: *There's only about ${hoursLeft.toFixed(0)} hours left. We're running out of time.*`;
+            }
+            return sceneText;
         },
         choices: [
             {
@@ -671,9 +746,9 @@ export const shiftingLensScenes = {
         },
         onLoad: () => { gameState.friends.mel.present = true; },
         choices: [
-            { text: "\"Morning. Any new insights from the dream world?\"", nextScene: "gz_final_hours_planning" },
+            { text: "\"Morning. Any new insights from the dream world?\"", nextScene: "pre_final_planning_check" },
             { text: "\"Mel, I had this weird dream...\" (Describe a new 'glitch' or clue)", nextScene: "peters_place_dream_clue" },
-            { text: "\"I need coffee. And a plan. A real one this time.\"", nextScene: "gz_final_hours_planning" }
+            { text: "\"I need coffee. And a plan. A real one this time.\"", nextScene: "pre_final_planning_check" }
         ]
     },
     "peters_place_alone_next_morning": {
@@ -684,7 +759,7 @@ export const shiftingLensScenes = {
         onLoad: () => { gameState.friends.mel.present = false; },
         choices: [
             { text: "Call Mel immediately.", nextScene: "peter_calls_mel_morning" },
-            { text: "Forget Mel, investigate that new lead on your own.", condition: () => gameState.playerNoticedSpecificAnomaly, nextScene: "gz_final_hours_planning" },
+            { text: "Forget Mel, investigate that new lead on your own.", condition: () => gameState.playerNoticedSpecificAnomaly, nextScene: "pre_final_planning_check" },
             { text: "It's hopeless. I'm truly alone.", nextScene: "ending_despair_early" }
         ]
     },
@@ -696,23 +771,32 @@ export const shiftingLensScenes = {
         onLoad: () => { gameState.friends.mel.present = false; },
         choices: [
             { text: "Call Mel, tell her about your all-night breakthrough (or breakdown).", nextScene: "peter_calls_mel_morning_manic" },
-            { text: "No time for Mel. Act on your findings NOW.", nextScene: "gz_final_hours_planning" },
+            { text: "No time for Mel. Act on your findings NOW.", nextScene: "pre_final_planning_check" },
             { text: "Collapse from exhaustion.", nextScene: "ending_despair_early" }
         ]
     },
-    "peter_calls_mel_morning": {
+   "peter_calls_mel_morning": {
         text: "You call Mel. She sounds like she actually got some sleep. 'Peter? What's up? Everything okay?'",
-        onLoad: () => { gameState.friends.mel.present = true; advanceTime(0.2);},
+        onLoad: () => { 
+            gameState.friends.mel.present = true; 
+            advanceTime(0.2);
+        },
         choices: [
-            { text: "\"Mel, we need to move. Time's running out. That Point Impossible idea...\"", nextScene: "gz_final_hours_planning" },
-            { text: "\"I... I don't know if I can do this, Mel.\"", nextScene: "mel_reassures_peter_on_phone" }
+            { 
+                text: "\"Mel, we need to move. Time's running out. That Point Impossible idea...\"", 
+                nextScene: "mel_reacts_to_point_impossible_call" // <<< This is the change
+            },
+            { 
+                text: "\"I... I don't know if I can do this, Mel.\"", 
+                nextScene: "mel_reassures_peter_on_phone" 
+            }
         ]
-    },
+},
     "peter_calls_mel_morning_manic": {
         text: "You call Mel, your voice hoarse and rapid-fire as you explain your night of intense theorizing. 'Mel! I've got it! It all connects! But we have to move NOW!' There's a pause on her end. 'Peter... slow down. Where are you? Did you sleep at all?'",
         onLoad: () => { gameState.friends.mel.present = true; advanceTime(0.2); gameState.friends.mel.suspicion++;},
         choices: [
-            { text: "\"Sleep is for the simulated! Point Impossible, Mel, now!\"", nextScene: "gz_final_hours_planning" },
+            { text: "\"Sleep is for the simulated! Point Impossible, Mel, now!\"", nextScene: "pre_final_planning_check" },
             { text: "\"Okay, maybe I am a bit wired. But I found something.\"", nextScene: "mel_reassures_peter_on_phone" }
         ]
     },
@@ -720,14 +804,26 @@ export const shiftingLensScenes = {
         text: "Mel's voice is calm and steady over the phone. 'Okay, Peter. Deep breaths. Whatever you found, whatever you're feeling, we'll face it. I'm on my way to your place. We'll figure out the next step together. Don't do anything rash until I get there.'",
         onLoad: () => { advanceTime(0.5); gameState.friends.mel.friendship++; },
         choices: [
-            { text: "Wait for Mel, trying to calm down.", nextScene: "peters_place_next_morning_mel_present" }
+            { text: "Wait for Mel, trying to calm down.", nextScene: "mel_arrives_after_call" }
+        ]
+    },
+    // Add this new scene to your shiftingLensScenes object
+
+    "mel_arrives_after_call": {
+        text: "True to her word, Mel is at your door less than half an hour later. She holds up a thermos. 'Brought coffee. Sustainable stuff, not that sludge from the 'All Nighter'.' She steps past you into your 'nest', her expression all business. 'Okay, Peter. You sounded like you were about to launch a one-man crusade. Show me everything you have and why we're making a trip to a haunted radar station.'",
+        onLoad: () => {
+            gameState.currentLocation = "Peter's Place"; // Her arrival officially changes the location
+        },
+        choices: [
+            { text: "\"Okay, let's go over the evidence one more time. I'm a stickler.\"", nextScene: "peters_place_mapping_theories" },
+            { text: "\"I'm past the evidence. It's time to act. It has to be Point Impossible.\"", nextScene: "pre_final_planning_check" }
         ]
     },
     "peters_place_dream_clue": {
         text: "You recount a vivid, disturbing dream that felt more real than waking life – perhaps numbers, a location, or a distorted message. Mel listens intently. 'Dreams can be... data, sometimes. Especially in a place like this. Does it connect to anything we already know?'",
         onLoad: () => { gameState.peterSimulationCertainty++; advanceTime(0.3); },
         choices: [
-            { text: "\"Yes! It points straight back to Point Impossible!\"", nextScene: "gz_final_hours_planning" },
+            { text: "\"Yes! It points straight back to Point Impossible!\"", nextScene: "pre_final_planning_check" },
             { text: "\"I'm not sure yet, but it felt significant.\"", nextScene: "peters_place_mapping_theories" }
         ]
     },
@@ -754,21 +850,32 @@ export const shiftingLensScenes = {
         text: "With the others gone, the pub feels different. You and Mel find a quiet table. The band plays on, a soundtrack to your thoughts. The events of the night, the Esplanade conversation, hang in the air.",
         onLoad: () => { advanceTime(0.5); },
         choices: [
-            { text: "Talk to Mel about what happened with the others (if intervention occurred).", condition: () => !gameState.friends.john.present, nextScene: "gz_discuss_abandonment" },
+            { text: "Talk to Mel about what happened with the others.", condition: () => !gameState.friends.john.present, nextScene: "gz_discuss_abandonment" },
             { text: "Discuss your simulation theories further with Mel.", nextScene: "esplanade_explain_theory" },
             { text: "Suggest it's time to leave.", nextScene: "leaving_pub_options" }
         ]
     },
     "rejoin_friends_casual_chat": {
         text: () => {
-            let johnLine = gameState.friends.john.present ? "John, looking surprisingly chipper for someone who probably just de-materialised from a long-haul flight via his hearse's trans-dimensional boot, grins. 'Not much, mate. Just wondering if you two were out there composing a symphony of sighs or merely needed some privacy from my riveting account of airport security protocols.'" : "";
-            let janitaLine = gameState.friends.carrot.present ? "Janita beams, her phone already subtly documenting Mel's slightly exasperated eye-roll for her 'Friends Behaving Oddly' collection. 'I saved you some carrot cake, Peter! It's my nan's recipe – mostly carrot, partly existential comfort!'" : "";
-            let andyLine = gameState.friends.neil.present ? "Andy, in his Fender tee, nods sagely. 'The band's tightening up. Still not a patch on early Genesis, mind, but less offensive than that time they tried a dubstep version of Khe Sanh.'" : "";
-            return `You try to act casual, a feat requiring Herculean self-control. ${johnLine} ${janitaLine} ${andyLine} The conversation picks up, a bit like a car with a dodgy starter motor, but it picks up. Mel subtly supports your casual demeanor, mostly by not immediately asking if anyone else saw the fabric of reality develop a sudden fondness for bees.`;
+            // This function dynamically builds the text based on who is still present at the pub.
+            // It checks for John's presence to add his line.
+            let johnLine = gameState.friends.john.present ? "John grins. 'Not much, mate. Just wondering if you two were solving the world's problems out there or just needed some privacy.'" : "";
+            
+            // It checks for Janita's presence to add her line.
+            let janitaLine = gameState.friends.carrot.present ? "Janita adds, 'I saved you some carrot cake, Peter, if you want some later!'" : "";
+            
+            // It then constructs the final string, including the base narration and any relevant character lines.
+            return `You try to act casual. ${johnLine} ${janitaLine} The conversation picks up, a bit strained perhaps, but an attempt at normalcy. Mel subtly supports your casual demeanor.`;
         },
-        onLoad: () => { advanceTime(0.3); },
+        onLoad: () => {
+            // When this scene loads, it advances the in-game clock by 0.3 hours.
+            advanceTime(0.3);
+        },
         choices: [
+            // This choice leads to a period of 'normal' conversation.
             { text: "Join the conversation, try to keep it light.", nextScene: "pub_normal_group_time" },
+            
+            // This choice allows the player to try and gather more information subtly.
             { text: "Subtly try to see if anyone else has noticed odd things.", nextScene: "pub_subtle_probing" }
         ]
     },
@@ -807,7 +914,7 @@ export const shiftingLensScenes = {
         onLoad: () => { advanceTime(1); },
         choices: [
             { text: "After a while, suggest it's getting late.", nextScene: "leaving_pub_options" },
-            { text: "Use a quiet moment to talk to Mel again.", nextScene: "pub_aftermath_debrief" },
+            { text: "Use a quiet moment to talk to Mel again.", nextScene: "pub_mel_ponders_anomaly" },
             { text: "Wait and see if the friends bring up the 'weirdness' again.", nextScene: "pub_friends_initiate_talk" }
         ]
     },
@@ -841,6 +948,43 @@ export const shiftingLensScenes = {
         choices: [
             { text: "Alright. I'm listening.", nextScene: "talk_to_other_friends_intro" }
         ]
-    }
+    },
+    // Add this new scene to your shiftingLensScenes object
+
+// Add this new scene
+    "mel_reacts_to_point_impossible_call": {
+        text: "There's a sharp intake of breath on the other end of the line. 'Whoa, hold on, Peter. Point Impossible? You're talking about jumping straight to the final boss while we're still on the tutorial level. Don't do anything rash. I'm coming over now.' The line clicks off before you can argue.",
+        onLoad: () => { 
+            advanceTime(0.5); // Time for her to get to your place
+            gameState.friends.mel.friendship = Math.min(10, gameState.friends.mel.friendship + 1); // She's coming to help
+        },
+        choices: [
+            { text: "Wait for Mel to arrive.", nextScene: "mel_arrives_after_call" }
+        ]
+    },
+"peters_place_insistence_response": {
+        text: () => {
+            return "Mel pinches the bridge of her nose, looking weary but not dismissive. 'Peter, I *want* to follow you down this rabbit hole, I really do. But glitches based on feelings aren't concrete evidence. They're whispers. We need something solid, something undeniable, or we're just two sleep-deprived people scaring ourselves in your apartment full of blinking lights.'";
+        },
+        choices: [
+            { 
+                text: "\"You're right. I'm exhausted. Let's just get some rest.\"", 
+                nextScene: "peters_place_suggest_rest" 
+            },
+            { 
+                text: "\"Fine! If you don't see it, I'll figure it out myself!\"", 
+                consequence: () => {
+                    gameState.friends.mel.friendship--; 
+                    gameState.friends.mel.trustInPeterTheory--;
+                }, 
+                nextScene: "peters_place_peter_goes_solo_from_home" 
+            },
+            { 
+                text: "\"Okay, forget the glitches. What about the 48-hour deadline?\"", 
+                condition: () => gameState.melKnowsAboutDeadline, // This choice only appears if Peter told Mel
+                nextScene: "peters_place_mel_helps_theorize" 
+            }
+        ]
+},
     // --- END: Corrected "Rejoining Friends at Pub" sequence ---
 };

@@ -4,6 +4,7 @@ export let gameState = {
     currentTime: 0,
     peterSimulationCertainty: 1,
     playerNoticedSpecificAnomaly: false,
+    melKnowsAboutDeadline: false,
     previousAnomaly: null,
     currentLocation: "Torquay Hotel",
     friends: {
@@ -15,7 +16,8 @@ export let gameState = {
         kel: { name: "Tony", friendship: 7, suspicion: 1, present: true } // UPDATED
     },
     currentSceneId: "start",
-    dogMentioned: false
+    dogMentioned: false,
+    allOtherFriendsHaveDeparted: false, 
 };
 
 export function advanceTime(hours) {

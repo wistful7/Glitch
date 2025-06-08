@@ -6,7 +6,7 @@ export const introScenes = {
     "start": {
         text: () => {
             // Updated text (Option 2)
-            return "Torquay Hotel is jumping. Your mates have assembled: Mel, eyebrow already set to 'skeptical'; John, having miraculously navigated his hearse to a screeching halt; Andy, in his possibly sentient Fender t-shirt; Janita, phone out, filming the unfolding drama for posterity; Simone; and Tony, ready to flee. 'The Kite Machine' concludes a valiant assault on a Cold Chisel classic. Levi, their frontman – a blur of hair and misplaced confidence – grabs the mike. 'Right, Torquay!' he yelps, 'Dance hard or it's \"Sweet Caroline\" for nine hours straight!' He grins maniacally. A few brave patrons twitch. You sip your beer. It's... beer-adjacent.";
+            return "Torquay Hotel is jumping. Your mates have assembled: Mel, eyebrow already set to 'skeptical'; John, Andy, in his Fender t-shirt; Yanita, phone out, filming; Simone and Tony - or is that Kath and Kel, ready to flee. 'The Kite Machine' is singing a Cold Chisel classic. Levi, their frontman – a blur of hair,– grabs the mike. 'Torquay!' he roars, 'Dance hard or it's \"Sweet Caroline\" for nine hours straight!' He grins maniacally. A few brave patrons twitch. You sip your beer. It tastes...strange.";
         },
         onLoad: () => {
             advanceTime(1);
@@ -22,27 +22,28 @@ export const introScenes = {
     // Ensure those scenes follow here as they were defined previously. For example:
 
     "glitch_observe": {
-        text: () => {
-            let scene_text = "You attempt to focus on the band, nodding with what you hope passes for rhythmic appreciation. Suddenly, the lead singer, Levi, mid-power-ballad-squall, seems to... skip. Not in a jaunty, hop-like fashion, but more like a corrupted audio file or a particularly stubborn AI refusing to compute the concept of 'subtlety'. He repeats the same line twice: '...cheap wine and a three-day growth, growth!' He blinks, a look of profound bafflement momentarily replacing the rock-god intensity, shakes his head as if dislodging a bewildered moth, and carries on. ";
-            scene_text += "Remarkably, none of your friends, currently engrossed in their own existential crises or the bottom of their glasses, seem to have noticed this blatant affront to the laws of linear time.";
-            return scene_text;
+    text: () => {
+            return "You're watching the band when Levi the singer hits a strange snag, stuttering a lyric: '...cheap wine and a three-day, three-day growth, growth!'\n\nOn the second 'growth,' his head snaps around, and for a split second, he stares directly at you. His eyes are blank, his expression gone. A voice—his, but utterly flat and devoid of melody—cuts through the pub noise straight into your head: 'You have 48 hours.'\n\nThen he blinks, and he's back, wailing into the microphone as if he never stopped. You look around, heart pounding, but your friends are completely oblivious.";
         },
         choices: [
-            { text: "Shrug it off. Too much beer, maybe?", consequence: () => { gameState.peterSimulationCertainty = Math.max(0, gameState.peterSimulationCertainty - 1); }, nextScene: "post_glitch_initial_chat_mel" },
-            { text: "Make a mental note. That was weird.", consequence: () => { gameState.peterSimulationCertainty = Math.min(10, gameState.peterSimulationCertainty + 1); }, nextScene: "post_glitch_initial_chat_mel" },
-            { text: "Look around to see if anyone else reacted.", nextScene: "look_around_reaction" }
+            { text: "What was that? A hallucination? Must be the beer...", consequence: () => { gameState.peterSimulationCertainty = Math.max(0, gameState.peterSimulationCertainty - 1); }, nextScene: "post_glitch_initial_chat_mel" },
+            { text: "That was a message. That was real. Make a detailed mental note.", consequence: () => { gameState.peterSimulationCertainty = Math.min(10, gameState.peterSimulationCertainty + 2); }, nextScene: "post_glitch_initial_chat_mel" },
+            { text: "Immediately turn to Mel. 'You did NOT just see that, did you?'", nextScene: "ask_mel_glitch_initial" }
         ]
     },
     "glitch_observe_uneasy": {
         beforeText: () => { gameState.peterSimulationCertainty = Math.min(10, gameState.peterSimulationCertainty + 1); },
-        text: "Your gaze sweeps across the pub, lingering on the flickering neon sign behind the bar, the way the smoke from somewhere seems to hang too perfectly still. Then, your attention snaps to the band. The lead singer stutters, repeating a line: '...cheap wine and a three-day growth, growth!' He recovers quickly, but you definitely saw it. A cold knot forms in your stomach.",
+        text: () => {
+            return "Your gnawing unease proves justified. The sound of the pub suddenly cuts out, and the singer, Levi, turns from the mike. His eyes are blank as they find yours across the room. A flat, internal voice, using his mouth but not his soul, states clearly: 'The deadline is 48 hours.' The sound immediately returns. Your unease hardens into cold dread. That was a warning.";
+        },
+        backgroundMusic: "audio/thelake.mp3",
         choices: [
-            { text: "It's nothing. Just a tired musician.", consequence: () => { gameState.peterSimulationCertainty = Math.max(0, gameState.peterSimulationCertainty - 1); }, nextScene: "post_glitch_initial_chat_mel" },
-            { text: "This feeling... it's getting stronger. That wasn't normal.", consequence: () => { gameState.peterSimulationCertainty = Math.min(10, gameState.peterSimulationCertainty + 2); }, nextScene: "post_glitch_initial_chat_mel" },
+            { text: "It's nothing. Just my mind playing tricks...", consequence: () => { gameState.peterSimulationCertainty = Math.max(0, gameState.peterSimulationCertainty - 1); }, nextScene: "post_glitch_initial_chat_mel" },
+            { text: "This feeling... it's real. That was a message.", consequence: () => { gameState.peterSimulationCertainty = Math.min(10, gameState.peterSimulationCertainty + 2); }, nextScene: "post_glitch_initial_chat_mel" },
             { text: "Quietly ask Mel if she saw that.", nextScene: "ask_mel_glitch_initial" }
         ]
     },
-    "look_around_reaction": {
+        "look_around_reaction": {
         text: "You glance quickly at your friends, then at nearby tables. Everyone seems engrossed in their conversations or the music, oblivious. It makes the moment feel even stranger, more isolated.",
         onLoad: () => { gameState.peterSimulationCertainty = Math.min(10, gameState.peterSimulationCertainty + 1); },
         choices: [
@@ -52,18 +53,38 @@ export const introScenes = {
     },
     "ask_mel_glitch_initial": {
         text: () => {
+            const peterLine = "You grab Mel's arm, your voice tight with adrenaline. 'Mel. The singer. He stopped. He looked right at me and said something.'";
             let melResponse = "";
+
             if (gameState.friends.mel.friendship > 5) {
-                melResponse = "Mel leans in, shouting over the renewed musical onslaught. 'Saw what, Pete? The existential dread in the guitarist's eyes? Or did Levi just spontaneously combust and I missed it? Terribly inconvenient if he has, the set's not over.' She gives you a curious, slightly amused look. 'You alright, or has the cheap wine finally achieved sentience?'";
+                melResponse = "Mel leans closer, shouting over the music. 'He spoke to you? Mid-song? So now you're the star of the show! While flattering, it seems statistically unlikely.'";
             } else {
-                melResponse = "Mel turns, her expression one of carefully curated patience usually reserved for explaining offside rules to particularly dense spaniels. 'What are you on about, Peter? I'm trying to ascertain if the drummer is using actual rhythm or just hitting things in a sequence that vaguely resembles it. It's quite the conundrum.'";
+                melResponse = "Mel pulls a face. 'Looked at you? Peter, he's a singer on a stage, he looks at everyone.'";
             }
-            return `You turn to Mel. "Did you see that? The singer just... hiccuped. In time. Twice."\n\n${melResponse}`;
+            return `${peterLine}\n\n${melResponse}`;
         },
-        onLoad: () => { advanceTime(0.1); },
+        onLoad: () => {
+            advanceTime(0.1);
+        },
         choices: [
-            { text: "Never mind, probably just me.", consequence: () => { if (gameState.friends.mel.friendship <= 5) gameState.friends.mel.suspicion++; }, nextScene: "post_glitch_initial_chat_mel" },
-            { text: "No, really! He repeated a whole line. It was strange!", consequence: () => { gameState.friends.mel.suspicion++; gameState.peterSimulationCertainty = Math.min(10, gameState.peterSimulationCertainty + 1); }, nextScene: "post_glitch_initial_chat_mel_defensive" }
+            {
+                text: "\"You're right... it was nothing. Just the lights playing tricks.\"",
+                consequence: () => { 
+                    // If Mel is already skeptical, backing down makes Peter seem more erratic.
+                    if (gameState.friends.mel.friendship <= 5) gameState.friends.mel.suspicion++; 
+                },
+                nextScene: "post_glitch_initial_chat_mel"
+            },
+            {
+                text: "\"No, I'm serious, Mel! He looked at me and said, 'You have 48 hours!'\"",
+                consequence: () => {
+                    // Making such a wild claim increases her suspicion more significantly.
+                    gameState.friends.mel.suspicion = Math.min(10, gameState.friends.mel.suspicion + 3);
+                    gameState.peterSimulationCertainty = Math.min(10, gameState.peterSimulationCertainty + 2);
+                    gameState.melKnowsAboutDeadline = true;
+                },
+                nextScene: "post_glitch_initial_chat_mel_defensive"
+            }
         ]
     },
     "post_glitch_initial_chat_mel": {
@@ -75,10 +96,10 @@ export const introScenes = {
         ]
     },
     "post_glitch_initial_chat_mel_defensive": {
-        text: "Mel frowns slightly. 'Okay, Peter... if you say so. Maybe lay off the heavy beers for a bit?' She doesn't sound entirely convinced, more like humoring you. The band finishes their set.",
+        text: "Mel frowns slightly. 'He said you have 48 hours'... Okay, Peter. Right. Look, I think you've had one too many pints, or maybe you're in an X Files script.' She doesn't sound entirely convinced, more like humoring you.",
         onLoad: () => { advanceTime(0.2); },
         choices: [
-            { text: "Right, yeah. Good idea. (Drop it)", nextScene: "pub_aftermath_debrief" },
+            { text: "Right, yeah. Mulder flashback. (Drop it)", nextScene: "pub_aftermath_debrief" },
             { text: "I'm telling you, Mel, something's not right here. (Persist)", consequence: () => { gameState.friends.mel.suspicion = Math.min(10, gameState.friends.mel.suspicion + 2); gameState.peterSimulationCertainty = Math.min(10, gameState.peterSimulationCertainty + 1); gameState.friends.mel.friendship = Math.max(0, gameState.friends.mel.friendship-1); }, nextScene: "pub_aftermath_debrief" }
         ]
     }

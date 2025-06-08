@@ -188,3 +188,26 @@ body {
     /* padding-bottom: 120px; */ /* Ensure more space for placeholder if content is dense on small screens */
     /* } */
 }
+#debug-panel {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #00FF00; /* Classic green terminal text */
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 12px;
+    padding: 8px;
+    border: 1px solid #00FF00;
+    border-radius: 5px;
+    z-index: 1000; /* Ensure it's on top of other elements */
+    opacity: 0.8;
+    line-height: 1.4;
+    text-align: left;
+}
+
+#debug-panel h4 {
+    margin: 0 0 5px 0;
+    padding: 0 0 3px 0;
+    border-bottom: 1px solid #008f00; /* Darker green border */
+    font-size: 13px;
+}

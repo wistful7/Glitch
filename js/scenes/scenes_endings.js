@@ -64,7 +64,7 @@ export const endingScenes = {
         choices: [
             {
                 text: () => gameState.friends.mel.present ? "\"Mel, this is getting out of control. We need a plan, now!\"" : "\"This is escalating. I need to do something definitive.\"",
-                nextScene: "gz_final_hours_planning" // From scenes_final_act.js
+                nextScene: "pre_final_planning_check" // From scenes_final_act.js
             },
             {
                 text: () => gameState.friends.mel.present ? "\"Okay, that was NOT normal. Let's go to my place and figure this out.\"" : "\"I need to get somewhere safe and think. My place.\"",
@@ -130,17 +130,26 @@ export const endingScenes = {
     "listen_to_music_phase2_intro": {
         text: () => {
             let sceneText = "The band, 'The Kite Machine,' lurches back onto the stage for their next set, looking mildly refreshed or possibly just less actively terrified than before. Mel is still beside you, an island of wry amusement in a sea of... well, pub. They launch into an unexpectedly earnest, and alarmingly accurate, rendition of Coldplay's 'Yellow'.\n\n";
+            
             if (gameState.friends.kel.present) {
-                sceneText += "You notice Tony (Kel) visibly flinch, as if struck by an invisible, mournful piano chord. 'Oh, for the love of all that is holy and doesn't involve Chris Martin emoting!' he groans, loud enough for you, Mel, and several nearby pot plants to hear. 'Not Coldplay. Anything but Coldplay! That's it, I'm out!' He doesn't just stand; he *erupts* from his chair, grabs his drink, and makes a tactical retreat towards the beer garden with the speed and determination of a man fleeing a sudden tax audit. 'My ears demand sanctuary!' drifts back as he vanishes.\n\n";
+                sceneText += "You notice Tony (Kel) visibly flinch, as if struck by an invisible, mournful piano chord. 'Oh, for the love of all that is holy and doesn't involve Chris Martin emoting!' he groans, loud enough for you, Mel, and several nearby pot plants to hear. 'Not Coldplay. Anything but Coldplay! That's it, I'm out!' He doesn't just stand; he erupts from his chair, grabs his drink, and makes a tactical retreat towards the beer garden with the speed and determination of a man fleeing a sudden tax audit. 'My ears demand sanctuary!' drifts back as he vanishes.\n\n";
             }
+            
             if (gameState.friends.neil.present) { // Andy's reaction
                 sceneText += "Andy, meanwhile, just stares blankly into his beer, a single tear tracing a path through the condensation on his glass. 'It's just... so... yellow,' he whispers, utterly bereft. It's unclear if he means the song, the beer, or the crushing weight of existence itself.\n\n";
             }
+            
             sceneText += "The earlier weirdness still plays on your mind, now harmonising beautifully with Tony's dramatic exit and Andy's profound sorrow. Mel just sips her drink, an enigmatic smile on her face.";
+            
             return sceneText;
         },
-        onLoad: () => { advanceTime(1); },
-        choices: [ /* ... existing choices ... */ ]
+        onLoad: () => { 
+            advanceTime(1); 
+        },
+        choices: [
+            { text: "After the set, suggest it's time to leave.", nextScene: "leaving_pub_options" },
+            { text: "Try to talk to Mel again during a break.", nextScene: "pub_aftermath_debrief" }
+        ]
     },
     "leaving_pub_options": { // Hub scene, called from multiple places
         text: () => `You're ready to leave the Torquay Hotel. The night is still relatively young, though, around ${Math.floor(gameState.currentTime) % 24}:00.`,
